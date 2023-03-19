@@ -4,16 +4,16 @@ Tags: slack, notifications, support, customer service, team communication, produ
 Requires at least: 5.9
 Tested up to: 6.1.1
 Requires PHP: 5.6
-Stable Tag: 1.0.0
+Stable Tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+== Description ==
 WP Notifier To Slack is a WordPress plugin that allows users to receive instant notifications of their plugin activity, review and support requests directly in their Slack workspace.
 
-== Description ==
 **WP Notifier To Slack**
 
-**WP Notifier To Slack also includes a WordPress support channel feedback/review feature that allows author to receive support requests from WordPress plugin support and review page directly in Slack. This feature can help plugin owners improve their response times and provide better customer support.
+WP Notifier To Slack also includes a WordPress support channel feedback/review feature that allows author to receive support requests from WordPress plugin support and review page directly in Slack. This feature can help plugin owners improve their response times and provide better customer support.
 
 [youtube https://youtu.be/uuN7O5lqezU]
 
@@ -67,5 +67,8 @@ No.Notifier To Slack is an easy-to-use plugin and you can use it without any pro
 
 == Changelog ==
 
-= 1.0.0 - 21 FEB 2023 =
+= 1.0.1 - 28 FEB 2023 =
+- Update banner images
+
+= 1.0.0 - 28 FEB 2023 =
 - Initial stable release

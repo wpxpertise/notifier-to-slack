@@ -44,9 +44,29 @@ class WPNTS_Route {
 			'callback' => [ $this, 'set_slack_webhook' ],
 			'permission_callback' => [ $this, 'set_slack_webhook_permission' ],
 		] );
+		register_rest_route( 'wpnts/v1', '/register',[
+			'methods' => 'POST',
+			'callback' => [ $this, 'get_register_users' ],
+			'permission_callback' => [ $this, 'get_register_users_permission' ],
+		] );
+		register_rest_route( 'wpnts/v1', '/slack_webhook_interval_site_settings',[
+			'methods' => 'POST',
+			'callback' => [ $this, 'set_slack_webhook_site_settings' ],
+			'permission_callback' => [ $this, 'set_slack_webhook_permission_site_settings' ],
+		] );
+		register_rest_route( 'wpnts/v1', '/woocommerce_status',[
+			'methods'=>'GET',
+			'callback'=>[$this, 'get_woocommercewoocommerce_status_endpoint'],
+			'permission_callback' => [$this, 'get_woocommercewoocommerce_status_endpoint_permission'] 
+		] );
+		register_rest_route( 'wpnts/v1', '/slack_webhook_interval_woocommerce_settings',[
+			'methods' => 'POST',
+			'callback' => [ $this, 'set_slack_webhook_woocommerce_settings' ],
+			'permission_callback' => [ $this, 'set_slack_webhook_permission_woocommerce_settings' ],
+		] );
 
 	}
-
+	// ------------------------------------------------------------------------------------------//
 	/**
 	 * Plugin name add.
 	 *
@@ -76,7 +96,40 @@ class WPNTS_Route {
 	}
 
 	/**
-	 * Set webhook page.
+	 * Registration and subscription.
+	 *
+	 * @param WP_Request_Object $req WordPress request object.
+	 * @since 1.0.0
+	 */
+	public function get_register_users( $req ) {
+		$acceptRegistrtion = sanitize_text_field($req ['id']) ?? '';
+
+		if ( $acceptRegistrtion ) {
+			$current_user = wp_get_current_user();
+			$user_email = $current_user->user_email;
+		}
+
+		if ( $success ) {
+			return rest_ensure_response("$user_email ");
+			wp_die();
+		} else {
+			return rest_ensure_response("$user_email ");
+			wp_die();
+		}
+
+	}
+	/**
+	 * Rest route save permission.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_register_users_permission() {
+		return current_user_can( 'publish_posts' );
+	}
+
+	// --------------------------------------------------------------------------------------------------//
+	/**
+	 * Set webhook page for author settings.
 	 *
 	 * @param WP_Request_Object $req WordPress request object.
 	 * @since 1.0.0
@@ -101,6 +154,82 @@ class WPNTS_Route {
 	 * @since 1.0.0
 	 */
 	public function set_slack_webhook_permission() {
+		return true;
+	}
+	// -------------------------------------------------------------------------------------------//
+	/**
+	 * Set webhook page for site settings.
+	 *
+	 * @param WP_Request_Object $req WordPress request object.
+	 * @since 1.0.0
+	 */
+	public function set_slack_webhook_site_settings( $req ) {
+
+		$webhook_interval    = isset( $req['wpntswebhook_site_settings'] ) ? rest_sanitize_object( wp_unslash($req['wpntswebhook_site_settings']) ) : [];
+
+		if ( $webhook_interval ) {
+			update_option( 'wpnts_schedules_interval_site_settings', json_encode($webhook_interval) );
+			return rest_ensure_response(1);
+			wp_die();
+		} else {
+			return rest_ensure_response(0);
+			wp_die();
+		}
+	}
+	/**
+	 * Rest route save permission.
+	 *
+	 * @since 1.0.0
+	 */
+	public function set_slack_webhook_permission_site_settings() {
+		return true;
+	}
+
+	/**
+	 * Check Woocommerce install or not.
+	 *
+	 * @param WP_Request_Object $req WordPress request object.
+	 * @since 1.0.0
+	 */
+
+	public function get_woocommercewoocommerce_status_endpoint(){
+		$cf7_is_installed = is_plugin_active('woocommerce/woocommerce.php');
+		if($cf7_is_installed){
+			return rest_ensure_response($cf7_is_installed);
+		}else{
+			return rest_ensure_response($cf7_is_installed);									
+		}
+		wp_die();
+		
+	}
+	public function get_woocommercewoocommerce_status_endpoint_permission(){return true; } 
+
+
+	/**
+	 * Set webhook page for woocommerce settings.
+	 *
+	 * @param WP_Request_Object $req WordPress request object.
+	 * @since 1.0.0
+	 */
+	public function set_slack_webhook_woocommerce_settings( $req ) {
+
+		$webhook_interval    = isset( $req['wpntswebhook_woocommerce_settings'] ) ? rest_sanitize_object( wp_unslash($req['wpntswebhook_woocommerce_settings']) ) : [];
+
+		if ( $webhook_interval ) {
+			update_option( 'wpnts_schedules_interval_woocommerce_settings', json_encode($webhook_interval) );
+			return rest_ensure_response(1);
+			wp_die();
+		} else {
+			return rest_ensure_response(0);
+			wp_die();
+		}
+	}
+	/**
+	 * Rest route save permission.
+	 *
+	 * @since 1.0.0
+	 */
+	public function set_slack_webhook_permission_woocommerce_settings() {
 		return true;
 	}
 

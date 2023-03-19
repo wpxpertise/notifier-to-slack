@@ -2,20 +2,20 @@
 /**
  * Plugin Name: Notifier To Slack
  *
- * @author            Sabbir Sam, devsabbirahmed
- * @copyright         2023- devsabbirahmed
+ * @author            wpxpertise, devsabbirahmed
+ * @copyright         2023- wpxpertise
  * @license           GPL-2.0-or-later
- * @package WP-Notifier-To-Slack	
+ * @package WP-Notifier-To-Slack
  *
  * @wordpress-plugin
  * Plugin Name: Notifier To Slack
- * Plugin URI: https://github.com/sabbirsam/wp-notifier-to-slack
- * Description: Notifier To Slack is a WordPress plugin that allows users to receive instant notifications of their plugin activity, review and support requests directly in their Slack workspace.
- * Version:           1.0.1
+ * Plugin URI: https://github.com/wpxpertise/
+ * Description: Notifier To Slack allows users to receive instant notifications of their plugin activity, review and support requests directly in their Slack workspace.
+ * Version:           1.4.0
  * Requires at least: 5.9
  * Requires PHP:      5.6
- * Author:            SABBIRSAM
- * Author URI:        https://github.com/sabbirsam/
+ * Author:            WPXpertise
+ * Author URI:        https://github.com/wpxpertise/
  * Text Domain:       wpnts
  * Domain Path: /languages/
  * License:           GPL-2.0+
@@ -41,10 +41,14 @@ if ( file_exists(dirname(__FILE__) . '/vendor/autoload.php') ) {
  * All Namespace.
  */
 use WPNTS\Inc\WPNTS_Route;
+use WPNTS\Inc\WPNTS_Notify;
 use WPNTS\Inc\WPNTS_Enqueue;
+use WPNTS\Inc\WPNTS_WPUpdate;
 use WPNTS\Inc\WPNTS_Activate;
 use WPNTS\Inc\WPNTS_DbTables;
 use WPNTS\Inc\WPNTS_Deactivate;
+use WPNTS\Inc\WPNTS_WooCommerce;
+use WPNTS\Inc\WPNTS_PluginUpdate;
 use WPNTS\Inc\WPNTS_AdminDashboard;
 use WPNTS\Inc\WPNTS_BaseController;
 use WPNTS\Inc\WPNTS_NotifierReview;
@@ -84,10 +88,7 @@ if ( ! class_exists('WPNTS_Notifier') ) {
 
 		}
 		/**
-		 * Main Plugin Instance.
-		 *
-		 * Insures that only one instance of the addon exists in memory at any one
-		 * time. Also prevents needing to define globals all over the place.
+		 * Main Plugin Textdomain.
 		 */
 		public static function wpnts_load() {
 			load_plugin_textdomain('wpnts', false,dirname(__FILE__) . 'languages');
@@ -103,12 +104,26 @@ if ( ! class_exists('WPNTS_Notifier') ) {
 			new WPNTS_DbTables();
 			new WPNTS_Route();
 
+			//Active and Deactivation notification.
+			$active  = new WPNTS_Notify();
+		
+			//All plugin update notification.
+			$update = new WPNTS_PluginUpdate();
+			$update->wpnts_plugin_update_notification();
+
+			//WordPress Core version update notification.
+			$wpupdate = new WPNTS_WPUpdate();
+			$wpupdate->wpnts_wordpress_core_update();
+			
+			//Plugin ORG support case notification.
 			$load_support = new WPNTS_NotifierSupport();
 			$load_support->wpnts_support_tickets();
 
+			//Plugin review notification.
 			$load_review = new WPNTS_NotifierReview();
 			$load_review->wpnts_review_tickets();
-
+			
+			$woocoomerce_product = new WPNTS_WooCommerce();
 		}
 		/**
 		 * While active the plugin redirect.

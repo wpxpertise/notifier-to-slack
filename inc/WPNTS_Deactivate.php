@@ -9,6 +9,9 @@
 
 namespace WPNTS\Inc;
 
+use \WPNTS\Inc\WPNTS_Notify;
+use \WPNTS\Inc\WPNTS_WPUpdate;
+use \WPNTS\Inc\WPNTS_PluginUpdate;
 use \WPNTS\Inc\WPNTS_NotifierReview;
 use \WPNTS\Inc\WPNTS_NotifierSupport;
 

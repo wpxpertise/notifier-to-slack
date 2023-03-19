@@ -38,6 +38,7 @@ class WPNTS_Enqueue extends WPNTS_BaseController {
 		 */
 		if ( 'toplevel_page_wpnts_notifier' == $screen || 'notifier_page_wpnts_notifier_setting' == $screen ) {
 			wp_enqueue_style( 'wpnts_main_scss_style', $this->plugin_url . 'build/index.css',[],'1.0.0','all' );
+			wp_enqueue_script( 'wcs_smtp_js', $this->plugin_url . 'assets/js/smtp.js',[ 'jquery' ],1.0,true );
 
 			/**
 			 * Main Script enqueue here

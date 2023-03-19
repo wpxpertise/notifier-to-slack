@@ -46,7 +46,7 @@ class WPNTS_NotifierReview {
 
 		$schedules_int = get_option( 'wpnts_schedules_interval');
 		$schedules_interval = json_decode($schedules_int);
-		$wpnts_time = $schedules_interval->interval_review;
+		$wpnts_time = $schedules_interval->interval_review ?? '250';
 
 		$schedules['added_schedules_interval'] = [
 			'interval' => isset($wpnts_time) ? $wpnts_time : 30,
@@ -62,13 +62,18 @@ class WPNTS_NotifierReview {
 	 * @since 1.0.0
 	 */
 	public function wpnts_review_tickets() {
+
 		$get_plugin = get_option( 'wpnts_plugin_list');
 		$add_pluginName = json_decode($get_plugin);
 
 		$pluginName = [];
 
-		foreach ( $add_pluginName as $obj ) {
-			$pluginName[] = 'https://wordpress.org/support/plugin/' . $obj->content . '/reviews/feed/';
+		if ( is_array($add_pluginName) ) {
+			foreach ( $add_pluginName as $obj ) {
+				if ( isset($obj->content) ) {
+					$pluginName[] = 'https://wordpress.org/support/plugin/' . $obj->content . '/reviews/feed/';
+				}
+			}
 		}
 
 		$urls = $pluginName;
@@ -78,8 +83,8 @@ class WPNTS_NotifierReview {
 
 		$schedules_int = get_option( 'wpnts_schedules_interval');
 		$schedules_interval = json_decode($schedules_int);
-		$wpnts_time = $schedules_interval->interval_review;
-		$activereview = $schedules_interval->activereview;
+		$wpnts_time = $schedules_interval->interval_review ?? '250';
+		$activereview = $schedules_interval->activereview ?? 'false';
 
 		if ( true === $activereview && isset($last_sent_time) && ( $current_time - $last_sent_time ) >= $wpnts_time ) {
 
@@ -183,6 +188,7 @@ class WPNTS_NotifierReview {
 					'headers' => [
 						'Content-Type' => 'application/json',
 					],
+					// 'timeout'     => '5',
 				]);
 
 			}

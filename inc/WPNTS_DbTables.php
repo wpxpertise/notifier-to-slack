@@ -32,12 +32,30 @@ final class WPNTS_DbTables {
 		/**
 		 * Default setting value.
 		 */
-
 		$wpnts_default_interval = [
-			'interval' => 300,
-			'webhook' => '',
-			'reviewDays' => -7,
+			'webhook' => 'https://hooks.slack.com/your-services/',
+			'interval' => '2500',
+			'interval_review' => '2500',
+			'reviewDays' => '-7',
+			'activereview' => 'false',
+			'activesupport' => 'false',
 		];
+
+		$wpnts_schedules_interval_site_settings = [
+			'webhook' => 'https://hooks.slack.com/your-services/',
+			'interval_plugin_update' => 10,
+			'interval_sitehelgth_update' => 10,
+			'intervalDays' => -1,
+			'pluginactivation' => false,
+			'plugindeactivation' => false,
+			'updatenotification' => false,
+			'wpnotification' => false,
+			'loginandout' => false,
+			'sitehelgth' => false,
+			'registration' => false,
+
+		];
+
 		$wpnts_plugin_list = [
 			'id' => '1',
 			'title' => 'admin-chat-box',
@@ -45,9 +63,11 @@ final class WPNTS_DbTables {
 		];
 
 		add_option( 'wpnts_schedules_interval', json_encode($wpnts_default_interval) );
+		add_option( 'wpnts_schedules_interval_site_settings', json_encode($wpnts_schedules_interval_site_settings) );
 		add_option( 'wpnts_plugin_list', json_encode($wpnts_plugin_list) );
 		add_option( 'wpnts_review_last_sent_time', 0 );
 		add_option( 'wpnts_last_sent_time', 0 );
+		add_option( 'wpnts_last_plugin_updates', 0 );
 
 	}
 

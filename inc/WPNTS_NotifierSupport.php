@@ -37,7 +37,6 @@ class WPNTS_NotifierSupport {
 	public function __construct() {
 		add_filter( 'cron_schedules', [ $this, 'wpnts_add_cron_interval' ]);
 		add_action( 'wpnts_corn_hook', [ $this, 'wpnts_support_tickets' ]);
-		// add_action( 'admin_notices', array( $this,'wpnts_support_tickets' ));.
 	}
 
 	/**
@@ -49,7 +48,7 @@ class WPNTS_NotifierSupport {
 
 		$schedules_int = get_option( 'wpnts_schedules_interval');
 		$schedules_interval = json_decode($schedules_int);
-		$wpnts_time = $schedules_interval->interval;
+		$wpnts_time = $schedules_interval->interval ?? '250';
 
 		$schedules['added_schedules_interval'] = [
 			'interval' => isset($wpnts_time) ? $wpnts_time : 25,
@@ -71,19 +70,25 @@ class WPNTS_NotifierSupport {
 
 		$pluginName = [];
 
-		foreach ( $schedules_pluginName as $obj ) {
-			$pluginName[] = 'https://wordpress.org/support/plugin/' . $obj->content . '/feed/';
+		if (is_array($schedules_pluginName)) {
+			foreach ($schedules_pluginName as $obj) {
+				
+				if (isset($obj->content)) {
+					$pluginName[] = 'https://wordpress.org/support/plugin/' . $obj->content . '/feed/';
+				}
+			}
 		}
 
 		$urls = $pluginName;
 
-		$last_sent_time = get_option('wpnts_last_sent_time', 5);
+
+		$last_sent_time = get_option('wpnts_last_sent_time', 3);
 		$current_time = time();
 
 		$schedules_int = get_option( 'wpnts_schedules_interval');
 		$schedules_interval = json_decode($schedules_int);
-		$wpnts_time = $schedules_interval->interval;
-		$activesupport = $schedules_interval->activesupport;
+		$wpnts_time = $schedules_interval->interval ?? '250';
+		$activesupport = $schedules_interval->activesupport ?? 'false';
 
 		if ( true === $activesupport && isset($last_sent_time) && ( $current_time - $last_sent_time ) >= $wpnts_time ) {
 

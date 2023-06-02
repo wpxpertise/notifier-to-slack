@@ -1,0 +1,132 @@
+.wcs_widget{
+    display: flex;
+    flex: 1; // its define size of box
+    justify-content: space-between;
+    padding: 10px;
+    //shadow
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
+    //@at-root
+    height: 120px;
+
+    //@at-root
+    .wcs_left, .wcs_right{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .wcs_title{
+            font-weight: bold;
+            font-size: 14px;
+            color: rgb(160, 160, 160);
+            .wcs_tooltip_icon{
+                width: 13px;
+                height: 13px;
+                margin-left: 4px;
+            }
+        }
+
+        .wcs_counter{
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .wcs_link{
+            width: max-content;
+            font-size: 12px;
+            border-bottom: 1px solid gray;
+        }
+        .wcs_percentage{
+            // make equal 
+            display: flex;
+            align-items: center;
+            //@at-root
+            &.wcs_positive{
+                color: green;
+            }
+            &.wcs_negative{
+                color: red;
+            }
+            //@at-root
+
+        }
+    //  ICON style 
+        .wcs_staff_icon{
+            font-size: 18px;
+            padding: 5px;
+            background-color: rgba(2, 225, 154, 0.295);
+            border-radius: 5px;
+            align-self: flex-end;
+        }
+        .wcs_users_icon{
+            font-size: 18px;
+            padding: 5px;
+            background-color: rgba(226, 211, 0, 0.353);
+            border-radius: 5px;
+            align-self: flex-end;
+        }
+        .wcs_resolve_icon{
+            font-size: 18px;
+            padding: 5px;
+            background-color: rgba(3, 102, 32, 0.508);
+            border-radius: 5px;
+            align-self: flex-end;
+        }
+        .wcs_pending_icon{
+            font-size: 18px;
+            padding: 5px;
+            background-color: rgba(193, 6, 28, 0.334);
+            border-radius: 5px;
+            align-self: flex-end; //set right end the iocn 
+        }
+        .wcs_icon{
+            font-size: 18px;
+            padding: 5px;
+            background-color: rgba(128, 0, 128, 0.295);
+            border-radius: 5px;
+            align-self: flex-end; //set right end the iocn 
+        }
+        // END 
+        
+        
+    }
+}
+
+// free badge and opacity
+.wcs_widget.wcs_widgets_free {
+    position:relative;
+    // border-radius: 20px;
+
+    h4.pro_badge {
+        position: absolute;
+        bottom: 42px;
+        right: 0px;
+        // background: red;
+        background: #8504a7;
+        color: white;
+        // border: 1px dotted;
+        padding: 3px;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 1px;
+
+        animation-name:glow;
+        animation-duration:1s;
+        animation-iteration-count:infinite;
+        animation-direction:alternate;
+
+        @keyframes glow{
+            from{text-shadow:0px 0px 5px #fff,0px 0px 5px #614ad3;}
+            to{text-shadow:0px 0px 20px #fff,0px 0px 20px #614ad3;}
+          }
+    }
+    .wec_left_free{
+        opacity: 0.4;
+        background-color: rgb(250,250,250,0.2);  
+    }
+    .wec_right_free{
+        opacity: 0.4;
+        background-color: rgb(250,250,250,0.2);  
+    }
+
+    
+}

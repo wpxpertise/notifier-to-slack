@@ -55,9 +55,9 @@ class WPNTS_Route {
 			'permission_callback' => [ $this, 'set_slack_webhook_permission_site_settings' ],
 		] );
 		register_rest_route( 'wpnts/v1', '/woocommerce_status',[
-			'methods'=>'GET',
-			'callback'=>[$this, 'get_woocommercewoocommerce_status_endpoint'],
-			'permission_callback' => [$this, 'get_woocommercewoocommerce_status_endpoint_permission'] 
+			'methods' => 'GET',
+			'callback' => [ $this, 'get_woocommercewoocommerce_status_endpoint' ],
+			'permission_callback' => [ $this, 'get_woocommercewoocommerce_status_endpoint_permission' ],
 		] );
 		register_rest_route( 'wpnts/v1', '/slack_webhook_interval_woocommerce_settings',[
 			'methods' => 'POST',
@@ -192,17 +192,18 @@ class WPNTS_Route {
 	 * @since 1.0.0
 	 */
 
-	public function get_woocommercewoocommerce_status_endpoint(){
+	public function get_woocommercewoocommerce_status_endpoint() {
 		$cf7_is_installed = is_plugin_active('woocommerce/woocommerce.php');
-		if($cf7_is_installed){
+		if ( $cf7_is_installed ) {
 			return rest_ensure_response($cf7_is_installed);
-		}else{
-			return rest_ensure_response($cf7_is_installed);									
+		} else {
+			return rest_ensure_response($cf7_is_installed);
 		}
 		wp_die();
-		
+
 	}
-	public function get_woocommercewoocommerce_status_endpoint_permission(){return true; } 
+	public function get_woocommercewoocommerce_status_endpoint_permission() {
+		return true; }
 
 
 	/**

@@ -45,6 +45,10 @@ class WPNTS_AdminDashboard {
 			[ $this, 'notifier_pages' ]
 		);
 		add_submenu_page(
+			'wpnts_notifier', 'Author', 'Author', 'read', 'wpnts_notifier_authors',
+			[ $this, 'notifier_author_pages' ]
+		);
+		add_submenu_page(
 			'wpnts_notifier', 'Settings', 'Settings', 'manage_options', 'wpnts_notifier_setting',
 			[ $this, 'notifier_setting' ]
 		);
@@ -57,6 +61,14 @@ class WPNTS_AdminDashboard {
 	 */
 	public function notifier_pages() {
 		require_once plugin_dir_path(__FILE__) . '../template/WPNTS_Dashboard.php';
+	}
+	/**
+	 * Author page
+	 *
+	 * @since 1.0.0
+	 */
+	public function notifier_author_pages() {
+		 require_once plugin_dir_path(__FILE__) . '../template/WPNTS_Author.php';
 	}
 	/**
 	 * Setting page

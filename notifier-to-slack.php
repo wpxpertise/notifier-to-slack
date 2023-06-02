@@ -11,7 +11,7 @@
  * Plugin Name: Notifier To Slack
  * Plugin URI: https://github.com/wpxpertise/
  * Description: Notifier To Slack allows users to receive instant notifications of their plugin activity, review and support requests directly in their Slack workspace.
- * Version:           1.4.0
+ * Version:           1.5.0
  * Requires at least: 5.9
  * Requires PHP:      5.6
  * Author:            WPXpertise
@@ -53,6 +53,7 @@ use WPNTS\Inc\WPNTS_AdminDashboard;
 use WPNTS\Inc\WPNTS_BaseController;
 use WPNTS\Inc\WPNTS_NotifierReview;
 use WPNTS\Inc\WPNTS_NotifierSupport;
+use WPNTS\Inc\WPNTS_Security;
 
 
 if ( ! class_exists('WPNTS_Notifier') ) {
@@ -104,26 +105,28 @@ if ( ! class_exists('WPNTS_Notifier') ) {
 			new WPNTS_DbTables();
 			new WPNTS_Route();
 
-			//Active and Deactivation notification.
+			// Active and Deactivation notification.
 			$active  = new WPNTS_Notify();
-		
-			//All plugin update notification.
+
+			// All plugin update notification.
 			$update = new WPNTS_PluginUpdate();
 			$update->wpnts_plugin_update_notification();
 
-			//WordPress Core version update notification.
+			// WordPress Core version update notification.
 			$wpupdate = new WPNTS_WPUpdate();
 			$wpupdate->wpnts_wordpress_core_update();
-			
-			//Plugin ORG support case notification.
+
+			// Plugin ORG support case notification.
 			$load_support = new WPNTS_NotifierSupport();
 			$load_support->wpnts_support_tickets();
 
-			//Plugin review notification.
+			// Plugin review notification.
 			$load_review = new WPNTS_NotifierReview();
 			$load_review->wpnts_review_tickets();
-			
+
 			$woocoomerce_product = new WPNTS_WooCommerce();
+
+			$security_acess = new WPNTS_Security();
 		}
 		/**
 		 * While active the plugin redirect.

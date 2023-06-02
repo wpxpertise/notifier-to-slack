@@ -1,0 +1,139 @@
+.acb_top, .acb_bottom{
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
+    margin: 20px;
+    padding: 10px;
+    // to make side by side
+    display: flex;
+
+    h1{
+        color: lightgray;
+        font-size: 20px;
+    }
+    h1.setting_panel{flex: 3;}
+    h1.tesing_panel{flex: 3;}
+    h1.setting_panel a {
+        color: lightgray;
+        text-decoration: none;
+        cursor:pointer;
+        &:hover{
+            color: teal;
+        }
+    }
+    // left ------------------------------------------------
+    .acb_left{
+        flex: 3; 
+        text-align: center; 
+        margin: 25px;
+        box-shadow: 2px 4px 10px 1px rgb(201 201 201 / 47%);
+        padding: 14px;
+
+        .wpnts-switch-salesnotifications,
+        .wpnts-switch-stockoutofstocknotifications,
+        .wpnts-switch-commentmoderationnotifications
+          {
+              font-size: 17px;
+              text-align: left;
+              display: flex;
+              margin-bottom: 25px;
+
+              label {
+                margin-top: 4px;
+                margin: 11px;
+                margin-right: 350px;
+              }
+              @media only screen and (max-width: 1366px) {
+                label {
+                  margin-right: 100px;
+                }
+              }
+
+        }
+
+        .woo-supportSwitch-2{
+          margin-left: 90px;
+        }
+        .woo-supportSwitch-3{
+          margin-left: -9px;
+        }
+
+        .woo-supportSwitch-5{
+            margin-left: 30px;
+        }
+
+
+        /* .wpnts-switch-plugindeactivation, .wpnts-switch-updatenotification, .wpnts-switch-wpnotification {
+          pointer-events: none;
+          opacity: 0.4;
+          background-color: rgba(250, 250, 250, 0.2);
+        } */
+
+    }
+
+    // Right ------------------------------------------------
+    .acb_right{
+        flex: 3; 
+        margin: 25px;
+        margin-top: 37px;
+
+        form{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap; // to set all inside the wrap with the given width screen
+            gap: 20px;
+            label{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .formInput{
+                width: 60%;
+                textarea{
+                    height: 150px;
+                }
+                input{
+                    width: 100%;
+                    padding: 5px;
+                    border: none;
+                    border-bottom: 1px solid gray;
+                    background-color: #F0F0F1;
+
+                    &:focus{
+                        outline: none;
+                        box-shadow: none;
+                    }
+
+                }
+
+                .wpnts-setting{
+                  position: relative;
+                  .passimg{
+                      /* position: absolute;
+                      right: 0px;
+                      font-size: 18px;
+                      top: -17px;
+                        // top: 10px; */
+                    position: absolute;
+                    left: 90px;
+                    font-size: 18px;
+                    top: -19px;
+                  }
+                }
+                
+              }
+
+              .save-webhook{
+                width: 160px;
+                padding: 10px;
+                border: none;
+                background-color: teal;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                float: left;
+              }
+          }
+
+    }
+}

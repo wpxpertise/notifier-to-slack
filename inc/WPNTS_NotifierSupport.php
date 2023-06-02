@@ -70,17 +70,16 @@ class WPNTS_NotifierSupport {
 
 		$pluginName = [];
 
-		if (is_array($schedules_pluginName)) {
-			foreach ($schedules_pluginName as $obj) {
-				
-				if (isset($obj->content)) {
+		if ( is_array($schedules_pluginName) ) {
+			foreach ( $schedules_pluginName as $obj ) {
+
+				if ( isset($obj->content) ) {
 					$pluginName[] = 'https://wordpress.org/support/plugin/' . $obj->content . '/feed/';
 				}
 			}
 		}
 
 		$urls = $pluginName;
-
 
 		$last_sent_time = get_option('wpnts_last_sent_time', 3);
 		$current_time = time();

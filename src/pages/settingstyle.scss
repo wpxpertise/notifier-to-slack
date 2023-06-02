@@ -1,0 +1,19 @@
+$main-color: #f5f5f5;
+$div-width: 460px;
+// Define the animation duration and timing function
+$animation-duration: 0.5s;
+$animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+
+.acb_add_mail{
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+
+    .acb_mails_container{
+        flex: 6;
+
+        // here 
+        // here end 
+    }
+}

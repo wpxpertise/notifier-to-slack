@@ -136,7 +136,7 @@ if ( ! class_exists('WPNTS_Notifier') ) {
 		 */
 		public function wpnts_plugin_activation( $plugin ) {
 			if ( plugin_basename(__FILE__) == $plugin ) {
-				wp_redirect(admin_url('admin.php?page=wpnts_notifier'));
+				wp_safe_redirect(admin_url('admin.php?page=wpnts_notifier'));
 				die();
 			}
 		}

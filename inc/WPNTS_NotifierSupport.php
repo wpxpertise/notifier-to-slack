@@ -52,7 +52,7 @@ class WPNTS_NotifierSupport {
 
 		$schedules['added_schedules_interval'] = [
 			'interval' => isset($wpnts_time) ? $wpnts_time : 25,
-			'display'  => esc_html__( 'Assigned Time' ),
+			'display'  => esc_html__( 'Assigned Time in Seconds' ),
 		];
 		return $schedules;
 

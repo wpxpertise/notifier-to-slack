@@ -65,11 +65,11 @@ const PluginList = () => {
               'X-WP-NONCE':appLocalizer.nonce
             }
           }).then(function(res) {
-            // console.log(updatePluginslist)
+            console.log(res);
           });
           
         } catch(err){
-          // console.log(err);
+          console.log(err);
         }
         
     };

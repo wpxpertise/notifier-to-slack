@@ -138,21 +138,6 @@ const Security = () => {
                     </div>
                 </div>
           
-                {/* <div className="formInput"> 
-                    <label htmlFor="intervalDays">How many days you want-add last days</label>
-                    <div className="wpnts-setting">
-                        <input type="text" placeholder="-1" name="intervalDays" required onChange={handleChange} value={wpntswebhook_site_settings.intervalDays}/>
-                    </div>
-                </div>
-
-                
-                <div className="formInput">
-                    <label htmlFor="sitessecurityissuesInterval">Time Interval/Second</label>
-                    <div className="wpnts-setting">
-                        <input type="text" placeholder="add interval" name="sitessecurityissuesInterval" required onChange={handleChange} value={wpntswebhook_site_settings.sitessecurityissuesInterval}/>
-                    </div>
-                </div> */}
-
                 <button className="save-webhook" onClick={handleSave}>SAVE</button>
             </form>
 

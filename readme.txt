@@ -2,7 +2,7 @@
 Contributors: wpxpertise, devsabbirahmed
 Tags: slack, notifications, support, customer service, team communication, productivity, review, feedback, webhook
 Requires at least: 5.9
-Tested up to: 6.1.1
+Tested up to: 6.3
 Requires PHP: 5.6
 Stable Tag: 1.5.0
 License: GPLv2 or later
@@ -89,6 +89,23 @@ You will not receive any notifications on Slack, but the plugin will still funct
 7. Setting page
 
 == Changelog ==
+
+= 1.5.0 - 15 August 2023 =
+- New: Core wp-config modification alert
+- New: htaccess modification alert
+- New: Introduce Dashboard
+
+= 1.4.4 - 14 August 2023 =
+- Improvement: Enhanced compatibility to support WordPress 6.3
+
+= 1.4.3 - 25 May 2023 =
+- Improvement: Maintenance Update
+
+= 1.4.2 - 17 APR 2023 =
+- Improvement: Maintenance Update
+
+= 1.4.1 - 31 MAR 2023 =
+- Improvement: Checked compatibility with WordPress 6.2
 
 = 1.4.0 - 18 MAR 2023 =
 - New: Sales Notifications to Slack

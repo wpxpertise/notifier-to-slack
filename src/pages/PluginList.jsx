@@ -65,7 +65,8 @@ const PluginList = () => {
               'X-WP-NONCE':appLocalizer.nonce
             }
           }).then(function(res) {
-            // console.log(updatePluginslist)
+            console.log(res)
+            console.log(updatePluginslist)
           });
           
         } catch(err){
@@ -152,7 +153,7 @@ const PluginList = () => {
               <img className="wpnts_logo_footer" src={image} alt="staff" /> 
               <h1 className="setting_panel">Plugin List -<a target="_blank" href="#">Add Plugin slug from WordPress ORG</a></h1>
              
-              <h1 className="tesing_panel">Guideline</h1>
+              <h1 className="tesing_panel">Guideline Video</h1>
           
           </div>
           <div className="acb_bottom" id='acb_bottom'>

@@ -11,6 +11,7 @@ import "./woocommerce.scss";
 
 const WooCommerce = () => {
     const [passview, setPassview] = useState(false);
+    const [iswooactive, setIswooactive] = useState(false);
     const [credentials, setCredentials] = useState([]);
 
     const handleViewpass = () =>{
@@ -72,8 +73,45 @@ const WooCommerce = () => {
           commentmoderationnotifications: credentials.commentmoderationnotifications,
          });
       }, [credentials]);
- 
 
+
+        /**
+         * Add new plugin list name.
+         * 
+         */
+          const isWooActive = `${appLocalizer.wpntsUrl}/wpnts/v1/woocommerce_status`;
+          useEffect(() => {
+            const checkWooStatus = async () => {
+              try {
+                const response = await axios.get(isWooActive, {
+                  headers: {
+                    'content-type': 'application/json',
+                    'X-WP-NONCE': appLocalizer.nonce
+                  }
+                });
+        
+                const woocommerceStatus = response.data;
+                setIswooactive(woocommerceStatus);
+              } catch (error) {
+                console.log(error);
+              }
+            };
+        
+            // Initial check
+            checkWooStatus();
+        
+            // Check at an interval (e.g., every 10 seconds)
+            const intervalId = setInterval(checkWooStatus, 10000); // Adjust the interval as needed (in milliseconds)
+        
+            // Clear interval on component unmount
+            return () => clearInterval(intervalId);
+          }, []);
+
+
+        /**
+         * SAVE
+         * 
+         */
       const handleSave = async e => {
         e.preventDefault()
         localStorage.setItem("wpnts_woocommerce_settings", JSON.stringify(wpntswebhook_woocommerce_settings)); 
@@ -109,8 +147,13 @@ const WooCommerce = () => {
         })
   
     }
+
+
+    
+
+
   return (
-    <div className="acb_bottom" id='acb_bottom'>
+    <div className={`acb_bottom ${iswooactive ? '' : 'inactive'}`} id='acb_bottom'>
         <div className="acb_left">
             <h3>WooCommerce settings panel</h3>
                 <br />
@@ -166,6 +209,13 @@ const WooCommerce = () => {
             </form>
 
         </div>
+
+        {!iswooactive && (
+          <div className="inactive-overlay">
+            <h3 className="inactive-text">Please install WooCommerce</h3>
+            </div>
+        )}
+
     </div>
         
   )

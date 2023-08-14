@@ -37,13 +37,13 @@ class WPNTS_Enqueue extends WPNTS_BaseController {
 		 * WPNTS admin-all screen loaded file.
 		 */
 		if ( 'toplevel_page_wpnts_notifier' == $screen || 'notifier_page_wpnts_notifier_setting' == $screen || 'notifier_page_wpnts_notifier_authors' == $screen ) {
-			wp_enqueue_style( 'wpnts_main_scss_style', $this->plugin_url . 'build/index.css',[],'1.0.0','all' );
+			wp_enqueue_style( 'wpnts_main_scss_style', $this->plugin_url . 'build/index.css',[], time(),'all' );
 			wp_enqueue_script( 'wcs_smtp_js', $this->plugin_url . 'assets/js/smtp.js',[ 'jquery' ],1.0,true );
 
 			/**
 			 * Main Script enqueue here
 			 */
-			wp_enqueue_script( 'wpnts_min_js', $this->plugin_url . 'build/index.js',[ 'jquery', 'wp-element' ],1.0,true );
+			wp_enqueue_script( 'wpnts_min_js', $this->plugin_url . 'build/index.js',[ 'jquery', 'wp-element' ], time() ,true );
 			wp_localize_script('wpnts_min_js', 'appLocalizer', [
 				'wpntsUrl' => home_url( '/wp-json' ),
 				'nonce' => wp_create_nonce( 'wp_rest'),
@@ -61,7 +61,7 @@ class WPNTS_Enqueue extends WPNTS_BaseController {
 			/**
 			 * Main Script enqueue here
 			 */
-			wp_enqueue_script( 'wpnts_public_min_js', $this->plugin_url . 'build/index.js',[ 'jquery', 'wp-element' ],1.0,true );
+			wp_enqueue_script( 'wpnts_public_min_js', $this->plugin_url . 'build/index.js',[ 'jquery', 'wp-element' ], time() ,true );
 			wp_localize_script('wpnts_public_min_js', 'appLocalizer', [
 				'wpntsUrl' => home_url( '/wp-json' ),
 				'nonce' => wp_create_nonce( 'wp_rest'),
@@ -70,4 +70,3 @@ class WPNTS_Enqueue extends WPNTS_BaseController {
 	}
 
 }
-

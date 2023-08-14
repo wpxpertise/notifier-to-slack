@@ -65,6 +65,12 @@ class WPNTS_Route {
 			'permission_callback' => [ $this, 'set_slack_webhook_permission_woocommerce_settings' ],
 		] );
 
+		register_rest_route( 'wpnts/v1', '/slack_webhook_site_security_settings',[
+			'methods' => 'POST',
+			'callback' => [ $this, 'set_slack__webhook_site_security_settings' ],
+			'permission_callback' => [ $this, 'set_slack_webhook_permission_site_security_settings' ],
+		] );
+
 	}
 	// ------------------------------------------------------------------------------------------//
 	/**
@@ -231,6 +237,35 @@ class WPNTS_Route {
 	 * @since 1.0.0
 	 */
 	public function set_slack_webhook_permission_woocommerce_settings() {
+		return true;
+	}
+
+
+	/**
+	 * Set webhook page for site security settings.
+	 *
+	 * @param WP_Request_Object $req WordPress request object.
+	 * @since 1.0.0
+	 */
+	public function set_slack__webhook_site_security_settings( $req ) {
+
+		$reuest_data    = isset( $req['wpntswebhook_site_settings'] ) ? rest_sanitize_object( wp_unslash($req['wpntswebhook_site_settings']) ) : [];
+
+		if ( $reuest_data ) {
+			update_option( 'wpnts_webhook_site_settings', json_encode($reuest_data) );
+			return rest_ensure_response(1);
+			wp_die();
+		} else {
+			return rest_ensure_response(0);
+			wp_die();
+		}
+	}
+	/**
+	 * Rest route save permission.
+	 *
+	 * @since 1.0.0
+	 */
+	public function set_slack_webhook_permission_site_security_settings() {
 		return true;
 	}
 

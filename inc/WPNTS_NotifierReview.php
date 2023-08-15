@@ -11,6 +11,7 @@ namespace WPNTS\Inc;
 
 use \WPNTS\Inc\WPNTS_Activate;
 use \WPNTS\Inc\WPNTS_Deactivate;
+use \WPNTS\Inc\WPNTS_SlackAttachment;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
@@ -142,46 +143,20 @@ class WPNTS_NotifierReview {
 
 				$webhook_url = $wpnts_webhook;
 
-				$attachments = [];
+				$attachmentHandler = new WPNTS_SlackAttachment();
 				foreach ( $recent_reviews as $ticket ) {
 					$ticket_title = substr($ticket['title'], strpos($ticket['title'], ']'));
 					$ticket_link = $ticket['link'];
 					$ticket_date = gmdate('F j, Y', $ticket['pubDate']);
 					$ticket_rating = $ticket['rating'];
 
-					$fields = [
-						[
-							'title' => 'Title: ' . $ticket_title . ' :tada:',
-							'short' => false,
-						],
-						[
-							'value' => $ticket_link,
-							'short' => false,
-						],
-						[
-							'title' => 'Date: ' . $ticket_date,
-							'short' => false,
-						],
+					// Handaler.
+					$attachmentHandler->addAttachment($ticket_title, $ticket_link, $ticket_date, '#FFFF00', ':tada:' , $ticket_rating);
 
-						[
-							'value' => str_repeat(':star:', $ticket_rating),
-							'short' => false,
-						],
-
-					];
-
-					$attachment = [
-						'fallback' => $ticket_title,
-						'color' => '#FFFF00',
-						'fields' => $fields,
-					];
-					$attachments[] = $attachment;
 				}
 
 				// Send reviews ratings to Slack.
-				$message = [
-					'attachments' => $attachments,
-				];
+				$message = $attachmentHandler->getMessage();
 
 				wp_remote_post($webhook_url, [
 					'body' => json_encode($message),

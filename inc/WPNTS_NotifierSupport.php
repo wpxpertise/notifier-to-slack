@@ -11,6 +11,7 @@ namespace WPNTS\Inc;
 
 use \WPNTS\Inc\WPNTS_Activate;
 use \WPNTS\Inc\WPNTS_Deactivate;
+use \WPNTS\Inc\WPNTS_SlackAttachment;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
@@ -143,40 +144,20 @@ class WPNTS_NotifierSupport {
 
 				$webhook_url = $wpnts_webhook;
 
-				$attachments = [];
+				
+				$attachmentHandler = new WPNTS_SlackAttachment();
+				
 				foreach ( $unresolved_tickets as $ticket ) {
 					$ticket_title = substr($ticket['title'], strpos($ticket['title'], ']') + 1);
 					$ticket_link = $ticket['link'];
 					$ticket_date = gmdate('F j, Y', $ticket['pubDate']);
 
-					$fields = [
-						[
-							'title' => 'Title: ' . $ticket_title . ' :cry:',
-							'short' => false,
-						],
-						[
-							'value' => $ticket_link,
-							'short' => false,
-						],
-						[
-							'title' => 'Date: ' . $ticket_date,
-							'short' => false,
-						],
-					];
-
-					$attachment = [
-						'fallback' => $ticket_title,
-						'color' => '#ff0000',
-						'fields' => $fields,
-					];
-
-					$attachments[] = $attachment;
+					// Handaler.
+					$attachmentHandler->addAttachment($ticket_title, $ticket_link, $ticket_date, '#ff0000', ':cry:');					
 				}
 
-				$message = [
-					'attachments' => $attachments,
-				];
-
+				$message = $attachmentHandler->getMessage();
+				
 				wp_remote_post( $webhook_url, [
 					'body' => json_encode( $message ),
 					'headers' => [

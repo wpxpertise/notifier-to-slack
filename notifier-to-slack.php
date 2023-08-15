@@ -40,6 +40,7 @@ if ( file_exists(dirname(__FILE__) . '/vendor/autoload.php') ) {
 /**
  * All Namespace.
  */
+use WPNTS\Inc\WPNTS_SlackAttachment;
 use WPNTS\Inc\WPNTS_Route;
 use WPNTS\Inc\WPNTS_Notify;
 use WPNTS\Inc\WPNTS_Enqueue;
@@ -127,6 +128,8 @@ if ( ! class_exists('WPNTS_Notifier') ) {
 			$woocoomerce_product = new WPNTS_WooCommerce();
 
 			$security_acess = new WPNTS_Security();
+			
+			$slackattachment = new WPNTS_SlackAttachment();
 		}
 		/**
 		 * While active the plugin redirect.

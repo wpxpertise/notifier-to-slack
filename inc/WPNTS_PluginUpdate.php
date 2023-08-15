@@ -61,54 +61,70 @@ class WPNTS_PluginUpdate {
 	 *
 	 * @since 1.0.0
 	 */
+
 	public function wpnts_plugin_update_notification() {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
+		
 		$last_updates = get_option( 'wpnts_last_plugin_updates', 3 );
 		$current_time = time();
-
+	
 		$schedules_int = get_option( 'wpnts_schedules_interval_site_settings');
 		$schedules_interval = json_decode($schedules_int);
-
+	
 		if ( isset($schedules_interval->interval_plugin_update) ) {
 			$wpnts_time = $schedules_interval->interval_plugin_update ?? '100';
 		}
 		if ( isset($schedules_interval->updatenotification) ) {
 			$updatenotification = $schedules_interval->updatenotification ?? 'false';
 		}
-
+	
 		if ( true === $updatenotification && isset($last_updates) && ( $current_time - $last_updates ) >= $wpnts_time ) {
-
 			$schedules_int = get_option( 'wpnts_schedules_interval_site_settings');
 			$schedules_interval = json_decode($schedules_int);
 			$wpnts_webhook = $schedules_interval->webhook;
-
+	
 			$slack_webhook_url = $wpnts_webhook;
-
+	
+			// Initialize the attachment handler.
+			$attachmentHandler = new WPNTS_SlackAttachment(); 
+	
 			$plugins = get_plugins();
-
+	
 			foreach ( $plugins as $plugin_slug => $plugin_data ) {
 				$last_update = isset( $last_updates[ $plugin_slug ] ) ? $last_updates[ $plugin_slug ] : 0;
-
-					// Check for available plugin updates
-					$plugin_updates = get_site_transient( 'update_plugins' );
-
+	
+				// Check for available plugin updates
+				$plugin_updates = get_site_transient( 'update_plugins' );
+	
 				if ( isset( $plugin_updates->response[ $plugin_slug ] ) ) {
-					$message = ':clap: A new version of the ' . $plugin_data['Name'] . ' plugin is available for update (' . $plugin_updates->response[ $plugin_slug ]->new_version . ').';
-					$payload = json_encode( [ 'text' => $message ] );
-					$args = [
-						'body'        => $payload,
-						'headers'     => [ 'Content-Type' => 'application/json' ],
-						'timeout'     => '5',
-						'sslverify'   => false,
-					];
-					wp_remote_post( $slack_webhook_url, $args );
-
+					$new_version = $plugin_updates->response[$plugin_slug]->new_version;
+	
+					// Using the attachment handler to add the plugin update notification.
+					$attachmentHandler->addPluginUpdateNotification($plugin_data['Name'], $new_version, ':clap:', '#00FF00' );
 				}
 			}
-
+	
+			// Get the attachments from the attachment handler.
+			$attachments = $attachmentHandler->getMessage()['attachments'];
+	
+			// Loop through attachments and send each notification.
+			foreach ($attachments as $attachment) {
+				$args = [
+					'body' => json_encode(['attachments' => [$attachment]]),
+					'headers' => [
+						'Content-Type' => 'application/json',
+					],
+					'timeout' => '5',
+					'sslverify' => false,
+				];
+	
+				wp_remote_post($slack_webhook_url, $args);
+			}
+	
 			update_option( 'wpnts_last_plugin_updates', time() );
 		}
 	}
+
+	
 
 }

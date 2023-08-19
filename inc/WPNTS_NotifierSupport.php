@@ -144,20 +144,19 @@ class WPNTS_NotifierSupport {
 
 				$webhook_url = $wpnts_webhook;
 
-				
 				$attachmentHandler = new WPNTS_SlackAttachment();
-				
+
 				foreach ( $unresolved_tickets as $ticket ) {
 					$ticket_title = substr($ticket['title'], strpos($ticket['title'], ']') + 1);
 					$ticket_link = $ticket['link'];
 					$ticket_date = gmdate('F j, Y', $ticket['pubDate']);
 
 					// Handaler.
-					$attachmentHandler->addAttachment($ticket_title, $ticket_link, $ticket_date, '#ff0000', ':cry:');					
+					$attachmentHandler->addAttachment($ticket_title, $ticket_link, $ticket_date, '#ff0000', ':cry:');
 				}
 
 				$message = $attachmentHandler->getMessage();
-				
+
 				wp_remote_post( $webhook_url, [
 					'body' => json_encode( $message ),
 					'headers' => [

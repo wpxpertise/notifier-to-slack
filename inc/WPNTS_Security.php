@@ -47,32 +47,32 @@ class WPNTS_Security {
 	 *
 	 * @since 1.0.0
 	 */
-	
+
 	public function wpnts_file_monitor_htaccess_file( $wp_customize ) {
 		$htaccess_file = ABSPATH . '.htaccess';
-	
+
 		if ( file_exists( $htaccess_file ) ) {
 			$last_modified_time = get_option('htaccess_modified_time');
 			if ( empty($last_modified_time) ) {
 				$last_modified_time = filemtime($htaccess_file);
 				update_option('htaccess_modified_time', $last_modified_time);
 			}
-	
+
 			add_action('shutdown', function() use ( $htaccess_file, &$last_modified_time ) {
 				if ( file_exists( $htaccess_file ) ) {
 					clearstatcache(true, $htaccess_file);
 					$current_modified_time = filemtime($htaccess_file);
-	
+
 					if ( $current_modified_time > $last_modified_time ) {
-	
+
 						$message = 'The .htaccess file has been modified- Take action as earliest possible.';
-	
+
 						$schedules_int = get_option( 'wpnts_webhook_site_settings');
 						$schedules_interval = json_decode($schedules_int);
 						$wpnts_webhook = $schedules_interval->webhook;
-	
+
 						$slack_webhook_url = $wpnts_webhook;
-	
+
 						$payload = json_encode([ 'text' => $message ]);
 						$args = [
 							'body'        => $payload,
@@ -81,16 +81,16 @@ class WPNTS_Security {
 							'sslverify'   => false,
 						];
 						wp_remote_post($slack_webhook_url, $args);
-	
+
 						// Update the last modified time
 						update_option('htaccess_modified_time', $current_modified_time);
-	
+
 					}
 				}
 			});
 		}
 	}
-	
+
 
 	 /**
 	  * WP Config file modification alert

@@ -151,7 +151,7 @@ class WPNTS_NotifierReview {
 					$ticket_rating = $ticket['rating'];
 
 					// Handaler.
-					$attachmentHandler->addAttachment($ticket_title, $ticket_link, $ticket_date, '#FFFF00', ':tada:' , $ticket_rating);
+					$attachmentHandler->addAttachment($ticket_title, $ticket_link, $ticket_date, '#FFFF00', ':tada:', $ticket_rating);
 
 				}
 

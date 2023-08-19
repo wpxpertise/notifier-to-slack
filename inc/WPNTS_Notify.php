@@ -84,6 +84,38 @@ class WPNTS_Notify {
 			'sslverify'   => false,
 		];
 		$response = wp_remote_post( $slack_webhook_url, $args );
+
+		// Update for Dashboard.
+
+		$activated_plugins = get_option( 'wpnts_activated_plugins', [] );
+		$current_time = time();
+
+		$plugin_key = $plugin . ' by ' . $current_user_name; // Used for check who is newly active the same plugin
+
+		// Check if more than 24 hours have passed since the last update.
+		if ( empty( $activated_plugins ) || ( $current_time - $activated_plugins['last_updated'] ) >= 86400 ) {
+			$activated_plugins = [
+				// 'plugins' => array( $plugin ),
+				'plugins' => [ $plugin . ' by ' . $current_user_name ],
+				'last_updated' => $current_time,
+			];
+		} else {
+			// Add the plugin to the list of activated plugins and update the last updated time.
+			// $activated_plugins['plugins'][] = $plugin;
+
+			/*
+			 $activated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
+			$activated_plugins['last_updated'] = $current_time; */
+
+			if ( ! in_array( $plugin_key, $activated_plugins['plugins'] ) ) {
+				$activated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
+				$activated_plugins['last_updated'] = $current_time;
+			}
+		}
+
+		// Update the option in the database.
+		update_option( 'wpnts_activated_plugins', $activated_plugins );
+
 	}
 
 	/**
@@ -109,6 +141,34 @@ class WPNTS_Notify {
 			'sslverify'   => false,
 		];
 		$response = wp_remote_post( $slack_webhook_url, $args );
+
+		// Update for Dashboard.
+
+		$deactivated_plugins = get_option( 'wpnts_deactivated_plugins', [] );
+		$current_time = time();
+
+		$plugin_key = $plugin . ' by ' . $current_user_name; // Used for check who is newly active the same plugin
+
+		// Check if more than 24 hours have passed since the last update.
+		if ( empty( $deactivated_plugins ) || ( $current_time - $deactivated_plugins['last_updated'] ) >= 86400 ) {
+			$deactivated_plugins = [
+				'plugins' => [ $plugin . ' by ' . $current_user_name ],
+				'last_updated' => $current_time,
+			];
+		} else {
+			// Add the plugin to the list of activated plugins and update the last updated time.
+
+			// $deactivated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
+			// $deactivated_plugins['last_updated'] = $current_time;
+
+			if ( ! in_array( $plugin_key, $deactivated_plugins['plugins'] ) ) {
+				$deactivated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
+				$deactivated_plugins['last_updated'] = $current_time;
+			}
+		}
+
+		// Update the option in the database.
+		update_option( 'wpnts_deactivated_plugins', $deactivated_plugins );
 	}
 	/**
 	 * Site Health notification
@@ -173,6 +233,16 @@ class WPNTS_Notify {
 		session_start();
 		$_SESSION['wpnts_user_display_name'] = $user->display_name;
 
+		// Add user login information to option table
+		$user_login_info = get_option( 'wpnts_user_login_info', [] );
+		$current_time = current_time( 'timestamp', false );
+		$user_login_info[] = [
+			'user' => $user_login,
+			'action' => 'login',
+			'timestamp' => $current_time,
+		];
+		update_option( 'wpnts_user_login_info', $user_login_info );
+
 	}
 	/**
 	 * Logout Notification
@@ -197,6 +267,17 @@ class WPNTS_Notify {
 			'sslverify'   => false,
 		];
 		$response = wp_remote_post( $slack_webhook_url, $args );
+
+		// Add user logout information to option table
+		$user_logout_info = get_option( 'wpnts_user_login_info', [] );
+		$current_time = current_time( 'timestamp', false );
+		$user_logout_info[] = [
+			'user' => $user_display_name,
+			'action' => 'logout',
+			'timestamp' => $current_time,
+		];
+		update_option( 'wpnts_user_login_info', $user_logout_info );
+
 	}
 
 	/**

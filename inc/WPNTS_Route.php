@@ -71,6 +71,12 @@ class WPNTS_Route {
 			'permission_callback' => [ $this, 'set_slack_webhook_permission_site_security_settings' ],
 		] );
 
+		register_rest_route( 'wpnts/v1', '/dashboard_calculations',[
+			'methods' => 'GET',
+			'callback' => [ $this, 'get_dashboard_calculations_endpoint' ],
+			'permission_callback' => [ $this, 'get_dashboard_calculations_endpoint_permission' ],
+		] );
+
 	}
 	// ------------------------------------------------------------------------------------------//
 	/**
@@ -266,6 +272,60 @@ class WPNTS_Route {
 	 * @since 1.0.0
 	 */
 	public function set_slack_webhook_permission_site_security_settings() {
+		return true;
+	}
+
+
+
+	/**
+	 * Check Woocommerce install or not.
+	 *
+	 * @param WP_Request_Object $req WordPress request object.
+	 * @since 1.0.0
+	 */
+
+	public function get_dashboard_calculations_endpoint() {
+
+		$response = [];
+
+		// Get the total plugin update count from the option table.
+		$total_plugin_updates = get_option( 'wpnts_total_plugin_updates', 0 );
+		$activated_plugins_data = get_option( 'wpnts_activated_plugins', [] );
+		$deactivated_plugins_data = get_option( 'wpnts_deactivated_plugins', [] );
+		$wpnts_user_login_info = get_option( 'wpnts_user_login_info', [] );
+
+		// You can add more data to the response array if needed.
+		$response['total_plugin_updates'] = $total_plugin_updates;
+
+		// Check if the activated plugins list was updated in the last 24 hours.
+		$current_time = time();
+
+		// Activated plugin list
+		if ( isset( $activated_plugins_data['last_updated'] ) && ( $current_time - $activated_plugins_data['last_updated'] ) < 86400 ) {
+			$activated_plugins_list = isset( $activated_plugins_data['plugins'] ) ? $activated_plugins_data['plugins'] : [];
+			$response['wpnts_activated_plugins'] = $activated_plugins_list;
+		} else {
+			// If more than 24 hours have passed, reset the list.
+			$response['wpnts_activated_plugins'] = [];
+		}
+
+		// Deactivated plugin list
+		if ( isset( $deactivated_plugins_data['last_updated'] ) && ( $current_time - $deactivated_plugins_data['last_updated'] ) < 86400 ) {
+			$deactivated_plugins_list = isset( $deactivated_plugins_data['plugins'] ) ? $deactivated_plugins_data['plugins'] : [];
+			$response['wpnts_deactivated_plugins'] = $deactivated_plugins_list;
+		} else {
+			// If more than 24 hours have passed, reset the list.
+			$response['wpnts_deactivated_plugins'] = [];
+		}
+
+		// Logged in and logout in last 24
+		$response['wpnts_user_login_info'] = $wpnts_user_login_info;
+
+		// Return the response as JSON.
+		wp_send_json( $response );
+
+	}
+	public function get_dashboard_calculations_endpoint_permission() {
 		return true;
 	}
 

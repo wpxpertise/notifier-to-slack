@@ -10,10 +10,11 @@ const Dashboard = () => {
             <div className="dashboard_active" id='wcs_dashboard'>
                 <div className="wcs_dashboard_cls">
                     <div className="wcs_widgets wcs_free" >
-                            <WCSWidgets type="total_staffs" /> 
-                            <WCSWidgets type="total_users" />
-                            <WCSWidgets type="total_ticket_close" />
-                            <WCSWidgets type="todays_new_ticket" />
+                            <WCSWidgets type="total_plugin_update" /> 
+                            <WCSWidgets type="lat_active_plugin_name" />
+                            <WCSWidgets type="total_deactivaed_plugin" />
+                            <WCSWidgets type="todays_who_logged" />
+                            <WCSWidgets type="todays_who_out" />
                     </div>
                     <div className="wcs_charts wcs_free">
                             <WCSFeatured />

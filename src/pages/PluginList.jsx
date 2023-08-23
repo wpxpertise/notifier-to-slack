@@ -5,6 +5,10 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import Form from "./Form"
 import image from '../../assets/dashboard-logo.png'
 import Modal from '../Components/Modal/Modal';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import Tippy from '@tippy.js/react';
+import 'tippy.js/dist/tippy.css'
 import "./fromstyle.scss";
 import 'sweetalert2/src/sweetalert2.scss' 
 
@@ -151,18 +155,25 @@ const PluginList = () => {
         {/* Start  */}
           <div className="acb_top">
               <img className="wpnts_logo_footer" src={image} alt="staff" /> 
-              <h1 className="setting_panel">Plugin List -<a target="_blank" href="#">Add Plugin slug from WordPress ORG</a></h1>
+              <h1 className="setting_panel">Plugin List -<a target="_blank" href="https://slack.com/signin#/signin">Add Plugin slug from WordPress ORG</a></h1>
              
-              <h1 className="tesing_panel">Guideline Video</h1>
+              <h1 className="tesing_panel">Guideline Video <VideoLibraryIcon/></h1>
           
           </div>
           <div className="acb_bottom" id='acb_bottom'>
               <div className="acb_left">
-             
-
+            
                     <div className="wpnts-form-list">
                     <div className="wpntsbtn">
-                      <button className="wpnts-add-form" onClick={addPlugin}>Add Plugin</button>
+                      <button className="wpnts-add-form" onClick={addPlugin}>
+                        Add Plugin
+                        <span className="wcs_tooltip_class">
+                          <Tippy content="Add your desirable plugin slug e.g notifier-to-slack from WordPress ORG plugin page">
+                            <span className="wcs_title"><HelpOutlineIcon className='wcs_tooltip_icon'/></span>
+                        </Tippy>
+                        </span>
+                      </button>
+                      
                       <button className="wpnts-save-form" onClick={handleSaveAll}>Update</button>
                     </div>
                     {pluginslist.map((plist) => (

@@ -1,10 +1,15 @@
 import React, { useState, useEffect  } from "react";
+import ReactPlayer from 'react-player'
 import axios from "axios";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReactSwitchreview from 'react-switch'
 import ReactSwitchsupport from 'react-switch'
 import Modal from '../Modal/Modal';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Tippy from '@tippy.js/react';
+import 'tippy.js/dist/tippy.css'
+
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import "./author.scss";
@@ -118,11 +123,16 @@ const Author = () => {
   return (
     <div className="acb_bottom" id='acb_bottom'>
         <div className="acb_left">
-            {/* <h3>Choose your preferable setting</h3> */}
-            <h3>Plugin author settings panel</h3>
+  
+            <h3 className="review-case-title">Plugin author settings panel
+              <Tippy content="Active plugin realtime review and support case notification in you slack">
+                  <span className="wcs_title"><HelpOutlineIcon className='wcs_tooltip_icon'/></span>
+              </Tippy>
+
+            </h3>
                 <br />
                 <div className="wpnts-switch-review">
-                    <label htmlFor="reviewnoti">Enable Review notification:</label>
+                    <label htmlFor="reviewnoti">Enable Review notification: </label>
                     <ReactSwitchreview uncheckedIcon checkedIcon className="reviewSwitch" name="wpnts-switch-review" id="reviewnoti" onChange={handleActivatereview} checked={wpntswebhook.activereview}/>
                 </div>
                 <div className="wpnts-switch-support">                                  
@@ -145,7 +155,7 @@ const Author = () => {
                 </div>
                 {wpntswebhook.activereview ? 
                 <div className="formInput">
-                    <label htmlFor="interval_review">Time Interval/Second for<b>Review response</b></label>
+                    <label htmlFor="interval_review">Time Interval/Second for Review response</label>
                     <div className="wpnts-setting">
                         <input type="text" placeholder="add interval" name="interval_review" required onChange={handleChange} value={wpntswebhook.interval_review}/>
                     </div>
@@ -153,7 +163,7 @@ const Author = () => {
                 :''}
                     {wpntswebhook.activesupport ? 
                 <div className="formInput">
-                    <label htmlFor="interval">Time Interval/Second for<b>Support response</b></label>
+                    <label htmlFor="interval">Time Interval/Second for Support response</label>
                     <div className="wpnts-setting">
                         <input type="text" placeholder="add interval" name="interval" required onChange={handleChange} value={wpntswebhook.interval}/>
                     </div>
@@ -169,6 +179,20 @@ const Author = () => {
                 
                 <button className="save-webhook" onClick={handleSave}>SAVE</button>
             </form>
+
+
+        </div>
+
+        <div className="acb_video">
+
+          <div className='wcs-player-wrapper'>
+                <ReactPlayer
+                  className='wcs-react-player'
+                  url='https://youtu.be/c-xsCV_2iBc'
+                  width='100%'
+                  height='100%'
+                />
+            </div>
 
         </div>
     </div>

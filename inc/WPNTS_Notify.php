@@ -53,6 +53,11 @@ class WPNTS_Notify {
 		if ( true === $wpnts_loginandout ) {
 			add_action( 'wp_login',[ $this, 'wpnts_user_activity_notification_login' ], 10, 2 );
 			add_action( 'wp_logout',[ $this, 'wpnts_user_activity_notification_logout' ] );
+			
+			add_action( 'wp_login',[ $this, 'wpnts_user_login_total_count' ], 10, 2 );
+
+			add_action('wp_login_failed', array($this, 'wpnts_user_track_failed_login'));
+
 		}
 		// New registration.
 		if ( true === $wpnts_registration ) {
@@ -65,16 +70,17 @@ class WPNTS_Notify {
 	 *
 	 * @since 1.0.0
 	 */
+
 	public function wpnts_plugin_activation( $plugin, $network_wide ) {
 		$current_user = wp_get_current_user();
 		$current_user_name = $current_user->display_name;
-
-		$schedules_int = get_option( 'wpnts_schedules_interval_site_settings');
-		$schedules_interval = json_decode($schedules_int);
+	
+		$schedules_int = get_option( 'wpnts_schedules_interval_site_settings' );
+		$schedules_interval = json_decode( $schedules_int );
 		$wpnts_webhook = $schedules_interval->webhook;
-
+	
 		$slack_webhook_url = $wpnts_webhook;
-
+	
 		$message = ':face_with_peeking_eye: Plugin ' . $plugin . ' has been *activated* by :arrow_right: ' . $current_user_name;
 		$payload = json_encode( [ 'text' => $message ] );
 		$args = [
@@ -84,39 +90,32 @@ class WPNTS_Notify {
 			'sslverify'   => false,
 		];
 		$response = wp_remote_post( $slack_webhook_url, $args );
-
+	
 		// Update for Dashboard.
-
+	
 		$activated_plugins = get_option( 'wpnts_activated_plugins', [] );
-		$current_time = time();
-
-		$plugin_key = $plugin . ' by ' . $current_user_name; // Used for check who is newly active the same plugin
-
+		$current_time = current_time( 'timestamp', false );
+	
 		// Check if more than 24 hours have passed since the last update.
 		if ( empty( $activated_plugins ) || ( $current_time - $activated_plugins['last_updated'] ) >= 86400 ) {
+			// Reset the entire array if 24 hours have passed.
 			$activated_plugins = [
-				// 'plugins' => array( $plugin ),
-				'plugins' => [ $plugin . ' by ' . $current_user_name ],
+				'plugins'      => [],
 				'last_updated' => $current_time,
 			];
-		} else {
-			// Add the plugin to the list of activated plugins and update the last updated time.
-			// $activated_plugins['plugins'][] = $plugin;
-
-			/*
-			 $activated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
-			$activated_plugins['last_updated'] = $current_time; */
-
-			if ( ! in_array( $plugin_key, $activated_plugins['plugins'] ) ) {
-				$activated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
-				$activated_plugins['last_updated'] = $current_time;
-			}
 		}
-
+	
+		$plugin_key = $plugin . ' by ' . $current_user_name;
+	
+		if ( ! in_array( $plugin_key, $activated_plugins['plugins'] ) ) {
+			$activated_plugins['plugins'][] = $plugin_key;
+			$activated_plugins['last_updated'] = $current_time;
+		}
+	
 		// Update the option in the database.
 		update_option( 'wpnts_activated_plugins', $activated_plugins );
-
 	}
+	
 
 	/**
 	 * Plugin deactive notification.
@@ -145,30 +144,27 @@ class WPNTS_Notify {
 		// Update for Dashboard.
 
 		$deactivated_plugins = get_option( 'wpnts_deactivated_plugins', [] );
-		$current_time = time();
-
-		$plugin_key = $plugin . ' by ' . $current_user_name; // Used for check who is newly active the same plugin
-
+		$current_time = current_time( 'timestamp', false );
+	
 		// Check if more than 24 hours have passed since the last update.
 		if ( empty( $deactivated_plugins ) || ( $current_time - $deactivated_plugins['last_updated'] ) >= 86400 ) {
+			// Reset the entire array if 24 hours have passed.
 			$deactivated_plugins = [
-				'plugins' => [ $plugin . ' by ' . $current_user_name ],
+				'plugins'      => [],
 				'last_updated' => $current_time,
 			];
-		} else {
-			// Add the plugin to the list of activated plugins and update the last updated time.
-
-			// $deactivated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
-			// $deactivated_plugins['last_updated'] = $current_time;
-
-			if ( ! in_array( $plugin_key, $deactivated_plugins['plugins'] ) ) {
-				$deactivated_plugins['plugins'][] = $plugin . ' by ' . $current_user_name;
-				$deactivated_plugins['last_updated'] = $current_time;
-			}
 		}
-
+	
+		$plugin_key = $plugin . ' by ' . $current_user_name;
+	
+		if ( ! in_array( $plugin_key, $deactivated_plugins['plugins'] ) ) {
+			$deactivated_plugins['plugins'][] = $plugin_key;
+			$deactivated_plugins['last_updated'] = $current_time;
+		}
+	
 		// Update the option in the database.
 		update_option( 'wpnts_deactivated_plugins', $deactivated_plugins );
+
 	}
 	/**
 	 * Site Health notification
@@ -213,37 +209,132 @@ class WPNTS_Notify {
 	/**
 	 * Login and logout
 	 */
+
 	public function wpnts_user_activity_notification_login( $user_login, $user ) {
-		 $schedules_int = get_option( 'wpnts_schedules_interval_site_settings');
-		$schedules_interval = json_decode($schedules_int);
+		$schedules_int = get_option( 'wpnts_schedules_interval_site_settings' );
+		$schedules_interval = json_decode( $schedules_int );
 		$wpnts_webhook = $schedules_interval->webhook;
-
+	
 		$slack_webhook_url = $wpnts_webhook;
-
+	
 		$message = ":yawning_face: User $user_login has logged in.";
 		$payload = json_encode( [ 'text' => $message ] );
 		$args = [
-			'body'        => $payload,
-			'headers'     => [ 'Content-Type' => 'application/json' ],
-			'timeout'     => '5',
-			'sslverify'   => false,
+			'body'      => $payload,
+			'headers'   => [ 'Content-Type' => 'application/json' ],
+			'timeout'   => '5',
+			'sslverify' => false,
 		];
 		$response = wp_remote_post( $slack_webhook_url, $args );
-
+	
 		session_start();
 		$_SESSION['wpnts_user_display_name'] = $user->display_name;
-
+	
 		// Add user login information to option table
 		$user_login_info = get_option( 'wpnts_user_login_info', [] );
 		$current_time = current_time( 'timestamp', false );
+	
+		// Remove users from the login info array if 24 hours have passed since their login
+		foreach ( $user_login_info as $key => $login ) {
+			if ( ( $current_time - $login['timestamp'] ) >= 86400 ) {
+				unset( $user_login_info[ $key ] );
+			}
+		}
+	
+		// Add the new login information
 		$user_login_info[] = [
-			'user' => $user_login,
-			'action' => 'login',
+			'user'      => $user_login,
+			'action'    => 'login',
 			'timestamp' => $current_time,
 		];
-		update_option( 'wpnts_user_login_info', $user_login_info );
-
+	
+		// Update the option in the database
+		update_option( 'wpnts_user_login_info', array_values( $user_login_info ) );
 	}
+
+	/**
+	 * Login Count
+	 */
+
+	public function wpnts_user_login_total_count( $user_login, $user ) {
+		$_SESSION['wpnts_user_display_name'] = $user->display_name;
+	
+		// Add user login information to option table
+		$user_login_info = get_option( 'wpnts_user_daily_login_info', [] );
+	
+		if ( is_array( $user_login_info ) ) {
+			$current_time = current_time( 'timestamp', false );
+			$current_day = date('l', $current_time); // Get the current day of the week
+	
+			// Define the day to reset the count (e.g., Saturday)
+			$reset_day = 'Saturday';
+	
+			// Check if the user has logged in before
+			$user_found = false;
+			foreach ( $user_login_info as &$login ) {
+				if ( $login['user'] === $user_login ) {
+					// Calculate the time since last login
+					$time_since_last_login = $current_time - $login['timestamp'];
+	
+					// New one 
+					// Check if it's a new day (the day to reset)
+					if ($current_day === $reset_day && $current_day !== $login['last_reset_day']) {
+						// Reset the daily login count for that day
+						$login['daily_login_count'] = 1;
+						$login['last_reset_day'] = $current_day;
+					} elseif ($current_day !== $login['last_reset_day']) {
+						// If it's a different day than the last reset day but not the reset day, reset the last_reset_day and daily_login_count
+						$login['last_reset_day'] = $current_day;
+						$login['daily_login_count'] = 1;
+					} else {
+						// Increment the daily login count for the current day
+						$login['daily_login_count']++;
+					}
+
+	
+					// Update the timestamp to the current login time
+					$login['timestamp'] = $current_time;
+	
+					$user_found = true;
+					break;
+				}
+			}
+	
+			if ( ! $user_found ) {
+				// Add the new login information for a new user
+				$user_login_info[] = [
+					'user'             => $user_login,
+					'action'           => 'login',
+					'timestamp'        => $current_time,
+					'daily_login_count' => 1, // Initialize daily login count to 1 for new users
+					'last_reset_day'   => $current_day, // Initialize the last reset day
+				];
+			}
+	
+			// Update the option in the database
+			update_option( 'wpnts_user_daily_login_info', array_values( $user_login_info ) );
+		}
+	}
+
+	
+	public function wpnts_user_track_failed_login($username) {
+		$log_data = get_option('wpnts_user_track_failed_login', array()); // Get existing data
+	
+		// Log failed login attempt
+		$log_entry = array(
+			'user' => $username,
+			'timestamp' => current_time('timestamp', true),
+			'action' => 'failed'
+		);
+	
+		$log_data[] = $log_entry;
+	
+		// Update the option in the database
+		update_option('wpnts_user_track_failed_login', $log_data);
+	}
+	
+
+	
 	/**
 	 * Logout Notification
 	 */
@@ -271,12 +362,25 @@ class WPNTS_Notify {
 		// Add user logout information to option table
 		$user_logout_info = get_option( 'wpnts_user_login_info', [] );
 		$current_time = current_time( 'timestamp', false );
+
+	
+		// Remove users from the login info array if 24 hours have passed since their login
+		foreach ( $user_logout_info as $key => $login ) {
+			if ( ( $current_time - $login['timestamp'] ) >= 86400 ) {
+				unset( $user_logout_info[ $key ] );
+			}
+		}
+	
+		// Add the new login information
 		$user_logout_info[] = [
-			'user' => $user_display_name,
-			'action' => 'logout',
+			'user'      => $user_display_name,
+			'action'    => 'logout',
 			'timestamp' => $current_time,
 		];
-		update_option( 'wpnts_user_login_info', $user_logout_info );
+	
+		// Update the option in the database
+		update_option( 'wpnts_user_login_info', array_values( $user_logout_info ) );
+
 
 	}
 

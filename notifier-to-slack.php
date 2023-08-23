@@ -11,7 +11,7 @@
  * Plugin Name: Notifier To Slack
  * Plugin URI: https://github.com/wpxpertise/
  * Description: Notifier To Slack allows users to receive instant notifications of their plugin activity, review and support requests directly in their Slack workspace.
- * Version:           1.6.2
+ * Version:           1.6.3
  * Requires at least: 5.9
  * Requires PHP:      5.6
  * Author:            WPXpertise

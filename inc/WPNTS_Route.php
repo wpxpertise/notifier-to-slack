@@ -288,6 +288,16 @@ class WPNTS_Route {
 
 		$response = [];
 
+		$site_status_transient = get_transient( 'health-check-site-status-result' );
+		$site_status = json_decode( $site_status_transient, true );
+
+		$status_data = [
+			'good' => $site_status['good'],
+			'recommended' => $site_status['recommended'],
+			'critical' => $site_status['critical'],
+		];
+		
+
 		// Get the total plugin update count from the option table.
 		$total_plugin_updates = get_option( 'wpnts_total_plugin_updates', 0 );
 		$activated_plugins_data = get_option( 'wpnts_activated_plugins', [] );
@@ -325,6 +335,7 @@ class WPNTS_Route {
 		$response['wpnts_user_login_info'] = $wpnts_user_login_info;
 		$response['wpnts_user_daily_login_info'] = $wpnts_user_daily_login_info;
 		$response['wpnts_user_track_failed_login'] = $wpnts_user_track_failed_login;
+		$response['wpnts_site_health'] = $status_data;
 
 		// Return the response as JSON.
 		wp_send_json( $response );

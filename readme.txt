@@ -4,7 +4,7 @@ Tags: slack, notifications, support, customer service, team communication, produ
 Requires at least: 5.9
 Tested up to: 6.3
 Requires PHP: 5.6
-Stable Tag: 1.6.2
+Stable Tag: 1.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,6 +133,7 @@ You will not receive any notifications on Slack, but the plugin will still funct
 7. Setting page
 
 == Changelog ==
+= 1.6.3 - 23 August 2023 =
 
 = 1.6.2 - 23 August 2023 =
 - New: Add graph of daily login activity

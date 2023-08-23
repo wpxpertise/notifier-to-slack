@@ -294,6 +294,9 @@ class WPNTS_Route {
 		$deactivated_plugins_data = get_option( 'wpnts_deactivated_plugins', [] );
 		$wpnts_user_login_info = get_option( 'wpnts_user_login_info', [] );
 
+		$wpnts_user_daily_login_info = get_option( 'wpnts_user_daily_login_info', [] );
+		$wpnts_user_track_failed_login = get_option( 'wpnts_user_track_failed_login', [] );
+
 		// You can add more data to the response array if needed.
 		$response['total_plugin_updates'] = $total_plugin_updates;
 
@@ -320,6 +323,8 @@ class WPNTS_Route {
 
 		// Logged in and logout in last 24
 		$response['wpnts_user_login_info'] = $wpnts_user_login_info;
+		$response['wpnts_user_daily_login_info'] = $wpnts_user_daily_login_info;
+		$response['wpnts_user_track_failed_login'] = $wpnts_user_track_failed_login;
 
 		// Return the response as JSON.
 		wp_send_json( $response );

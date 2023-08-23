@@ -4,6 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReactSwitchreview from 'react-switch'
 import ReactSwitchsupport from 'react-switch'
+import ReactPlayer from 'react-player'
 import Modal from '../Modal/Modal';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -197,7 +198,7 @@ const WooCommerce = () => {
 
                 {wpntswebhook_woocommerce_settings.stockoutofstocknotifications ?   
                 <div className="formInput">
-                    <label htmlFor="stockorout_interval_notification">Time Interval/Second for<b>notification</b></label>
+                    <label htmlFor="stockorout_interval_notification">Time Interval/Second for notification</label>
                     <div className="wpnts-setting">
                         <input type="text" placeholder="add interval" name="stockorout_interval_notification" required onChange={handleChange} value={wpntswebhook_woocommerce_settings.stockorout_interval_notification}/>
                     </div>
@@ -210,9 +211,23 @@ const WooCommerce = () => {
 
         </div>
 
+        <div className="acb_video">
+
+          <div className='wcs-player-wrapper'>
+                <ReactPlayer
+                  className='wcs-react-player'
+                  url='https://youtu.be/Ki40d-PDooo'
+                  width='100%'
+                  height='100%'
+                />
+            </div>
+
+        </div>
+        
+
         {!iswooactive && (
           <div className="inactive-overlay">
-            <h3 className="inactive-text">Please install WooCommerce</h3>
+            <h3 className="inactive-text">Please install WooCommerce first</h3>
             </div>
         )}
 

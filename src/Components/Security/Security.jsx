@@ -4,6 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReactSwitchreview from 'react-switch'
 import ReactSwitchsupport from 'react-switch'
+import ReactPlayer from 'react-player'
 import Modal from '../Modal/Modal';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -142,6 +143,20 @@ const Security = () => {
             </form>
 
         </div>
+
+        <div className="acb_video">
+
+          <div className='wcs-player-wrapper'>
+                <ReactPlayer
+                  className='wcs-react-player'
+                  url='https://youtu.be/1BhY7IfppVM'
+                  width='100%'
+                  height='100%'
+                />
+            </div>
+
+        </div>
+
     </div>
         
   )

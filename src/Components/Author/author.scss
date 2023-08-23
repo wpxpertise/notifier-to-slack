@@ -22,11 +22,24 @@
     }
     // left ------------------------------------------------
     .acb_left{
-        flex: 3; 
+        flex: 4 !important; 
         text-align: center; 
         margin: 25px;
         box-shadow: 2px 4px 10px 1px rgb(201 201 201 / 47%);
         padding: 14px;
+
+        .review-case-title{
+          position: relative;
+
+              span.wcs_title {
+                position: absolute;
+                svg.wcs_tooltip_icon {
+                  font-size: 15px;
+                }
+
+              }
+        }
+
 
         .wpnts-switch-review,
         .wpnts-switch-support,
@@ -82,7 +95,7 @@
 
     // Right ------------------------------------------------
     .acb_right{
-        flex: 3; 
+        flex: 2 !important; 
         margin: 25px;
         margin-top: 37px;
 
@@ -144,6 +157,27 @@
                 float: left;
               }
           }
+          
+
+    }
+
+    .acb_video{
+      flex: 2 !important; 
+      margin: 25px;
+      margin-top: 37px;
+
+      .wcs-player-wrapper {
+        position: relative;
+        padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+        margin-top: 14px;
+        border: 6px solid white;
+
+        .wcs-react-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+      }
 
     }
 }

@@ -4,6 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReactSwitchreview from 'react-switch'
 import ReactSwitchsupport from 'react-switch'
+import ReactPlayer from 'react-player'
 import Modal from '../Modal/Modal';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -209,7 +210,7 @@ const Site = () => {
 
                 {wpntswebhook_site_settings.updatenotification ? 
                 <div className="formInput">
-                    <label htmlFor="interval_plugin_update">Time Interval/Second for<b>WP Core & plugin update</b></label>
+                    <label htmlFor="interval_plugin_update">Time Interval/Second for WP Core & plugin update</label>
                     <div className="wpnts-setting">
                         <input type="text" placeholder="add interval" name="interval_plugin_update" required onChange={handleChange} value={wpntswebhook_site_settings.interval_plugin_update}/>
                     </div>
@@ -218,7 +219,7 @@ const Site = () => {
 
                 {wpntswebhook_site_settings.sitehelgth ? 
                 <div className="formInput">
-                    <label htmlFor="interval_sitehelgth_update">Time Interval/Second for<b>Site Helght</b></label>
+                    <label htmlFor="interval_sitehelgth_update">Time Interval/Second for Site Helght</label>
                     <div className="wpnts-setting">
                         <input type="text" placeholder="add interval" name="interval_sitehelgth_update" required onChange={handleChange} value={wpntswebhook_site_settings.interval_sitehelgth_update}/>
                     </div>
@@ -231,6 +232,20 @@ const Site = () => {
             </form>
 
         </div>
+
+        <div className="acb_video">
+
+          <div className='wcs-player-wrapper'>
+                <ReactPlayer
+                  className='wcs-react-player'
+                  url='https://youtu.be/pE_h3oMBf4I'
+                  width='100%'
+                  height='100%'
+                />
+            </div>
+
+        </div>
+
     </div>
         
   )

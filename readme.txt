@@ -1,27 +1,73 @@
-===WP Notifier To Slack ===
+=== WP Notifier To Slack ===
 Contributors: wpxpertise, devsabbirahmed
 Tags: slack, notifications, support, customer service, team communication, productivity, review, feedback, webhook
 Requires at least: 5.9
 Tested up to: 6.3
 Requires PHP: 5.6
-Stable Tag: 1.6.0
+Stable Tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WPXpertise introduced WP Notifier to Slack which is very useful WordPress plugin that enables users to receive real-time notifications of their website's plugin activity, plugin forum support or review directly in their Slack workspace. This integration between WordPress and Slack helps users stay up-to-date with their website's activity and enables them to respond promptly to any issues that may arise.
+WPXpertise introduced WP Notifier to Slack, a powerful WordPress plugin designed to enhance your website management experience with real-time notifications seamlessly integrated into your Slack workspace. WP Notifier to Slack, the ultimate WordPress plugin for real-time notifications. Stay in the know with instant updates on plugin reviews, site security, user activity, WooCommerce events, comments, and plugin/theme/WP Core updates—all conveniently delivered to your Slack workspace. Enhance website management and security effortlessly with WP Notifier to Slack.
 
 **WP Notifier To Slack**
 
-Notifier To Slack has plugin and site monitoring feature. You will be notified promptly if any previously installed plugin is deactivated or uninstalled, or if a new plugin is added and activated in your website. This functionality can also assist plugin authors improving their response rate in responding to there plugin support cases in a timely manner and providing better customer assistance.
+Notifier To Slack plugin has site monitoring dashboard. You will be visualise and notified promptly if any previously installed plugin is deactivated or uninstalled, or if a new plugin is added and activated in your website. This functionality can also assist plugin authors improving their response rate in responding to there plugin support cases in a timely manner and providing better customer assistance.
 
 [youtube https://youtu.be/uuN7O5lqezU]
 
 
-== 😍 Instant notifications ==
-Notifier To Slack sends instant notifications to your Slack workspace when particular events occur, such as a new review being added or a help forum receiving a support case, a new plugin being installed and activated, or an old plugin being deleted, WordPress being updated, and so on.
+== 😍 Instant Author Plugin Review Notifications  ==
+This feature is designed to keep WordPress authors and developers updated about user reviews of their plugins or themes in real-time.
+Whenever a user submits a review or rating for your WordPress plugin or theme, the "Notifier To Slack" plugin will instantly detect this event. 
+The plugin captures the details of the review, including the reivew title and ratting score and the content of the review itself with review page link.
+
+* [How to Add Instant Site Security in WP Notifier To Slack](https://youtu.be/c-xsCV_2iBc)
+
+Overall, the "Notifier To Slack" WordPress plugin's "Instant Author Plugin Review and Support Notifications" feature is a valuable tool for plugin and theme authors, as well as support teams, to actively engage with users, gather feedback, and provide timely assistance, all while integrating seamlessly with Slack for efficient communication.
+
+== 💀 Instant Site Security Notifications ==
+This feature likely monitors the WordPress configuration file (wp-config.php) and the .htaccess file for any unauthorized changes. If a hacker attempts to modify these files, the plugin may send a notification to the website administrator via Slack, alerting them to the potential security breach.
+
+* [How to Add Instant Site Security in WP Notifier To Slack](https://youtu.be/1BhY7IfppVM)
+
+== 😈 Instant User Activity Notifications  ==
+This feature monitors user-related activities on the website, such as new user registrations, logins, and logouts. When these events occur, the plugin sends notifications to the admin's Slack channel, helping them keep track of user activity on the site.
+
+* [How to Add Instant User Activity in WP Notifier To Slack](https://youtu.be/pE_h3oMBf4I)
+
+== 🥏 Instant WooCommerce Notifications ==
+ If your WordPress website includes a WooCommerce store, this feature likely notifies the admin about important events related to product stock status and sales. This could include notifications for products going in or out of stock and sales with user and product details, all sent to Slack.
+
+* [How to Add Instant WooCommerce Notifications in WP Notifier To Slack](https://youtu.be/Ki40d-PDooo)
+
+== 🫡 Instant Comment Notifications ==
+This feature monitors user comments on your website and sends instant notifications to the admin via Slack whenever a new comment is made. This can help admins stay engaged with their website's community and respond to comments promptly.
+
+* [How to Instant Comment Notifications in WP Notifier To Slack](https://youtu.be/Ki40d-PDooo)
+
+== 😎 Get New Update Notifications ==
+This feature alerts the admin whenever there are updates available for WordPress core or installed plugins. Keeping your WordPress software up-to-date is crucial for security, and this notification system helps admins stay informed about necessary updates.
+
+* [How to configure Update Notifications in WP Notifier To Slack](https://youtu.be/pE_h3oMBf4I)
 
 == 😀 Custom notification channels: ==
 You can set up custom notification channels in Slack to receive notifications for specific plugin with time interval. This allows you to keep your notifications organized and easily accessible.
+
+The "Notifier to Slack" plugin appears to be a tool for enhancing website security, user monitoring, e-commerce notifications, and update management, all while providing real-time alerts through Slack integration. 
+
+== 🔝Advance Dashboard ==
+
+The "Advance Dashboard" feature in the "Notifier To Slack" WordPress plugin appears to offer an enhanced monitoring and reporting system for site administrators. Here's what you can typically expect from an advanced dashboard feature.
+
+1. Real-time Site Activity: The dashboard likely provides a real-time overview of various activities happening on your WordPress website. This can include user registrations, logins, logouts, comments, sales (for WooCommerce sites), plugin updates, and more, all displayed in a single, easily accessible interface.
+
+2. Data Visualization: To make it more user-friendly, the advanced dashboard may present this information in the form of charts, graphs, or other visual representations. This can help administrators quickly grasp site and user activity.
+
+Integration with Slack: Given that the plugin integrates with Slack, the advanced dashboard might also allow you to configure Slack notifications directly from the settings. This could include specifying which Slack channel or workspace should receive specific types of notifications.
+
+Overall, an advanced dashboard feature like this can be an invaluable tool for website administrators. It provides a centralized location to monitor and manage various aspects of site activity in real-time, enhancing your ability to stay informed, make informed decisions, and maintain the security and performance of your WordPress website.
+
 
 
 == 🔝Notifier To Slack FEATURES ==
@@ -39,14 +85,12 @@ You can set up custom notification channels in Slack to receive notifications fo
 12. **Sales Notification to Slack** -  Get notified on Slack when someone makes a purchase on your website.
 13. **Product Stock/Out of Stock Notification** -  Get notified on Slack when a product is low on stock or out of stock.
 14. **Comment Moderation Notification** -  Get notified on Slack when a new comment is posted on the website and needs moderation.
-
-== 🔝Upcomming FEATURES ==
 15. **Unwanted Site Script Modification** -  Get notified on Slack when there is an unwanted modification in the website's script.
 16. **Site Hack or Security Issues** -  Get notified on Slack when there is a potential security issue or hack on the website.
 
-== IS THIS PLUGIN FREE TO USE? 😍 ==
+== 😍 IS THIS PLUGIN FREE TO USE? ==
 
-Notifier to Slack is a notifier plugin that comes in both free and premium versions. With the free version, you can sync unlimited notifications with your favorite plugin and receive them directly in your Slack channel. This means you can stay on top of your website's and author released plugin activity without paying a penny.
+Notifier to Slack is your essential notifier plugin, available mostly for free with upcoming premium versions. With the free version, you can effortlessly sync unlimited notifications from your favorite plugins and have them delivered directly to your Slack channel. This allows you to effortlessly monitor your website's activities and plugin updates without any cost. Keep tabs on user engagement, enhance your site's security, and receive real-time WooCommerce product sales and other updates, all without spending a dime. 
 
 
 == Installation ==
@@ -90,13 +134,23 @@ You will not receive any notifications on Slack, but the plugin will still funct
 
 == Changelog ==
 
+= 1.6.2 - 23 August 2023 =
+- New: Add graph of daily login activity
+- Fix: Logged out user bug fix from dashboard 
+
+
+= 1.6.1 - 22 August 2023 =
+- New: Add instruction video for each feature
+- Fix: Dashboard logged data reset feature after 24 hours
+
+
 = 1.6.0 - 18 August 2023 =
-- New: Dashboard feature implement
-- New: Plugin Update widgets
-- New: Last activaited pluigin widgets
-- New: Last deactivated pluigin widgets
-- New: Today logged users widgets  
-- New: Today logged out users widgets
+- New: Dashboard feature implement 🔥
+- New: Plugin Update widgets 
+- New: Last activaited pluigin widgets 
+- New: Last deactivated pluigin widgets 
+- New: Today logged users widgets   
+- New: Today logged out users widgets 
 - Improvement: Enhanced and refacor code
 
 = 1.5.1 - 16 August 2023 =

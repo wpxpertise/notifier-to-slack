@@ -8,9 +8,9 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import React, { useState, useEffect  } from "react";
 import axios from "axios";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tippy from '@tippy.js/react';
 import 'tippy.js/dist/tippy.css'
 import './widgets.scss'
@@ -35,6 +35,8 @@ const WCSWidgets = ( {type} ) => {
                 });
         
                 const total_updates = response.data;
+
+                // console.log(total_updates.wpnts_user_daily_login_info);
 
                     
 

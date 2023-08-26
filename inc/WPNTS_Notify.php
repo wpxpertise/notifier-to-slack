@@ -52,10 +52,9 @@ class WPNTS_Notify {
 		// Login and Logout.
 		if ( true === $wpnts_loginandout ) {
 			add_action( 'wp_login',[ $this, 'wpnts_user_activity_notification_login' ], 10, 2 );
-			add_action( 'wp_logout',[ $this, 'wpnts_user_activity_notification_logout' ] );
-			
 			add_action( 'wp_login',[ $this, 'wpnts_user_login_total_count' ], 10, 2 );
 
+			add_action( 'wp_logout',[ $this, 'wpnts_user_activity_notification_logout' ] );
 			add_action('wp_login_failed', array($this, 'wpnts_user_track_failed_login'));
 
 		}
@@ -269,28 +268,28 @@ class WPNTS_Notify {
 			// Define the day to reset the count (e.g., Saturday)
 			$reset_day = 'Saturday';
 	
+			$first_saturday_reset_done = get_option('wpnts_first_saturday_reset_done', 'false');
+	
+			// Check if it's a new week and reset the daily login count for all users
+			if ($current_day === $reset_day && $first_saturday_reset_done == 'false') {
+				$user_login_info = []; // Reset the entire array
+				update_option('wpnts_first_saturday_reset_done', 'true');
+			}
+	
 			// Check if the user has logged in before
 			$user_found = false;
 			foreach ( $user_login_info as &$login ) {
 				if ( $login['user'] === $user_login ) {
-					// Calculate the time since last login
-					$time_since_last_login = $current_time - $login['timestamp'];
-	
-					// New one 
-					// Check if it's a new day (the day to reset)
-					if ($current_day === $reset_day && $current_day !== $login['last_reset_day']) {
-						// Reset the daily login count for that day
+
+					// Check if it's a new day
+					if ( $current_day !== $login['last_reset_day'] ) {
+						// Reset the daily login count for a new day
 						$login['daily_login_count'] = 1;
 						$login['last_reset_day'] = $current_day;
-					} elseif ($current_day !== $login['last_reset_day']) {
-						// If it's a different day than the last reset day but not the reset day, reset the last_reset_day and daily_login_count
-						$login['last_reset_day'] = $current_day;
-						$login['daily_login_count'] = 1;
 					} else {
-						// Increment the daily login count for the current day
+						// If it's the same day, increment the daily login count for the current day
 						$login['daily_login_count']++;
 					}
-
 	
 					// Update the timestamp to the current login time
 					$login['timestamp'] = $current_time;
@@ -306,8 +305,8 @@ class WPNTS_Notify {
 					'user'             => $user_login,
 					'action'           => 'login',
 					'timestamp'        => $current_time,
-					'daily_login_count' => 1, // Initialize daily login count to 1 for new users
-					'last_reset_day'   => $current_day, // Initialize the last reset day
+					'daily_login_count' => 1, 
+					'last_reset_day'   => $current_day, 
 				];
 			}
 	
@@ -315,25 +314,54 @@ class WPNTS_Notify {
 			update_option( 'wpnts_user_daily_login_info', array_values( $user_login_info ) );
 		}
 	}
+	
 
+
+	/**
+	 * wpnts_user_track_failed_login
+	 */
 	
 	public function wpnts_user_track_failed_login($username) {
 		$log_data = get_option('wpnts_user_track_failed_login', array()); // Get existing data
 	
-		// Log failed login attempt
-		$log_entry = array(
-			'user' => $username,
-			'timestamp' => current_time('timestamp', true),
-			'action' => 'failed'
-		);
+		// Get the current date
+		$current_date = date('l');
 	
-		$log_data[] = $log_entry;
+		// Initialize the daily login count for the user
+		$daily_failed_count = 1; // Default to 1 for a new day
+	
+		// Flag to check if a matching entry was found
+		$entry_found = false;
+	
+		// Check if there are existing log entries for the user
+		foreach ($log_data as &$log_entry) {
+			if ($log_entry['user'] === $username && $log_entry['last_reset_day'] === $current_date) {
+				// If a log entry exists for the same user on the same day, increment the count
+				$log_entry['daily_failed_count']++;
+				$entry_found = true;
+				break; // Exit the loop since we found a matching entry
+			}
+		}
+	
+		// If no matching entry was found, create a new log entry
+		if (!$entry_found) {
+			// Log failed login attempt
+			$log_entry = array(
+				'user' => $username,
+				'timestamp' => current_time('timestamp', true),
+				'last_reset_day' => $current_date, // Initialize or update 'last_reset_day'
+				'daily_failed_count' => $daily_failed_count,
+				'action' => 'failed',
+			);
+	
+			$log_data[] = $log_entry;
+		}
 	
 		// Update the option in the database
 		update_option('wpnts_user_track_failed_login', $log_data);
 	}
 	
-
+	
 	
 	/**
 	 * Logout Notification

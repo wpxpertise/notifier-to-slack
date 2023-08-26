@@ -79,6 +79,7 @@ final class WPNTS_DbTables {
 		add_option( 'wpnts_review_last_sent_time', 0 );
 		add_option( 'wpnts_last_sent_time', 0 );
 		add_option( 'wpnts_last_plugin_updates', 0 );
+		add_option('wpnts_first_saturday_reset_done', "false");
 
 	}
 

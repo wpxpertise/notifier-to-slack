@@ -10,30 +10,30 @@ import axios from "axios";
 import './featured.scss'
 
 const WCSFeatured = () => {
-    // wpnts_site_helgth
+
+  const currentURL = window.location.href;
+  const wpAdminIndex = currentURL.indexOf('/wp-admin/');
+  const adminURL = currentURL.substring(0, wpAdminIndex);
 
     const [site_helgth, setSite_helgth] = useState({});
     
     const total_plugin_updates = `${appLocalizer.wpntsUrl}/wpnts/v1/dashboard_calculations`;
     useEffect(() => {
         const check_plugin_updates = async () => {
-        try {
-                const response = await axios.get(total_plugin_updates, {
-                headers: {
-                    'content-type': 'application/json',
-                    'X-WP-NONCE': appLocalizer.nonce
-                }
-                });
-        
-                const helgth_status = response.data;
-                // console.log(helgth_status);
-                
-                setSite_helgth(helgth_status);
-
+            try {
+                    const response = await axios.get(total_plugin_updates, {
+                    headers: {
+                        'content-type': 'application/json',
+                        'X-WP-NONCE': appLocalizer.nonce
+                    }
+                    });
             
-        } catch (error) {
-            console.log(error);
-        }
+                    const helgth_status = response.data;
+                    setSite_helgth(helgth_status);
+                
+            } catch (error) {
+                console.log(error);
+            }
         };
 
         check_plugin_updates();
@@ -44,7 +44,6 @@ const WCSFeatured = () => {
 
   return (
     <div className='wcs_featured'>
-        {/* <h4 className='pro_badge'>UPCOMMING</h4> */}
         <div className="wcs_featured">
             <div className="wcs_top">
                 <h1 className="wcs_title">Site Health Status</h1>
@@ -52,11 +51,9 @@ const WCSFeatured = () => {
             </div>
             <div className="wcs_bottom">
                 <div className="wcs_featuredChart">
-                {/* <CircularProgressbar value={0} text={`${0}%`} strokeWidth={5} /> */}
                 <CircularProgressbar value={site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.good :<CircularProgress />} text={`${site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.good : 0}%`} strokeWidth={5} />
                 
                 </div>
-                {/* <p className="wcs_title">Error</p> */}
                 <p className="wcs_title">Recommended</p>
                 <p className="wcs_amount">{site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.recommended : 0}</p>
                 <div className="wcs_summary">
@@ -74,7 +71,7 @@ const WCSFeatured = () => {
                         <div className="itemResult positive">
                             <KeyboardArrowUpIcon fontSize='small'/>
                          
-                            <div className="resultAmount">{site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.recommended :<CircularProgress />}</div>
+                            <div className="resultAmount">{site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.recommended : ''}</div>
                         </div>
                     </div>
                     <div className="wcs_item">
@@ -82,12 +79,13 @@ const WCSFeatured = () => {
                         <div className="itemResult negative">
                             <KeyboardArrowDownIcon fontSize='small'/>
             
-                            <div className="resultAmount">{site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.critical :<CircularProgress />}</div>
+                            <div className="resultAmount">{site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.critical :''}</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        { site_helgth.wpnts_site_health ? <h5>Your site has {site_helgth.wpnts_site_health ? site_helgth.wpnts_site_health.critical : ''} Critical issue. Please check quickly <a href={`${adminURL}/wp-admin/site-health.php`} target="_blank" rel="noopener noreferrer">view</a> </h5>: ''}
     </div>
   )
 }

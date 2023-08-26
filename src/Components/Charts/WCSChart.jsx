@@ -10,55 +10,50 @@ const WCSChart = () => {
   useEffect(() => {
     const check_plugin_updates = async () => {
       try {
-            const response = await axios.get(total_plugin_updates, {
-            headers: {
-                'content-type': 'application/json',
-                'X-WP-NONCE': appLocalizer.nonce
-            }
-            });
-    
-            const total_updates = response.data;
+        const response = await axios.get(total_plugin_updates, {
+          headers: {
+            'content-type': 'application/json',
+            'X-WP-NONCE': appLocalizer.nonce,
+          },
+        });
 
-            // To add all user who failed to login, two different array merge together to add failed  
-            const combinedData = total_updates.wpnts_user_daily_login_info.map(dailyLogin => {
-              const matchingFailedLogins = total_updates.wpnts_user_track_failed_login;
+        const total_updates = response.data;
+        const combinedData = total_updates.wpnts_user_daily_login_info.map((dailyLogin) => {
+          const matchingFailedLogins = total_updates.wpnts_user_track_failed_login.filter(
+            (failedLogin) => failedLogin.last_reset_day === dailyLogin.last_reset_day
+          );
+        
+          const failed = matchingFailedLogins.reduce((sum, failedLogin) => sum + failedLogin.daily_failed_count, 0);
+        
+          return {
+            ...dailyLogin,
+            failed,
+          };
+        });
+        
 
-              const failed = matchingFailedLogins.length;
-   
-              return {
-                ...dailyLogin,
-                failed
-              };
-            });
+        // Calculate login statistics for each day.
+        const loginCounts = combinedData.reduce((acc, entry) => {
+          const { last_reset_day, daily_login_count, failed } = entry;
 
-            // Total login count 
-            const loginCounts = combinedData.reduce((acc, entry) => {
+          if (!acc[last_reset_day]) {
+            acc[last_reset_day] = { day: last_reset_day, TotalLogin: 0, Person: 0, Failed: 0, Attempt: 0 };
+          }
 
-              const { last_reset_day, action, daily_login_count, failed } = entry;
-              if (!acc[last_reset_day]) {
+          acc[last_reset_day].TotalLogin += daily_login_count;
+          acc[last_reset_day].Failed += failed;
+          acc[last_reset_day].Attempt = acc[last_reset_day].TotalLogin + acc[last_reset_day].Failed;
+          
+          if (daily_login_count > 0) {
+            acc[last_reset_day].Person++;
+          }
+          
+          return acc;
+        }, {});
 
-                acc[last_reset_day] = { day: last_reset_day, Total: 0, Success: 0, Failed: 0, Attempt: 0 };
-              }
-              if (action === 'login') {
-
-                acc[last_reset_day].Total += daily_login_count;
-   
-                acc[last_reset_day].Failed = failed;
-
-                acc[last_reset_day].Attempt = acc[last_reset_day].Total  + acc[last_reset_day].Failed +  acc[last_reset_day].Success || 0;
-                
-                if (daily_login_count > 0) {
-                  acc[last_reset_day].Success++;
-                }
-
-              }
-              return acc;
-            }, {});
-    
-            // Convert the loginCounts object into an array of data
-            const chartDataReceived = Object.values(loginCounts);
-            setChartData(chartDataReceived);
-
+        // Convert the loginCounts object into an array of data
+        const chartDataReceived = Object.values(loginCounts);
+        setChartData(chartDataReceived);
       } catch (error) {
         console.log(error);
       }
@@ -66,17 +61,10 @@ const WCSChart = () => {
 
     // Initial check
     check_plugin_updates();
-
-    // Check at an interval (e.g., every 10 seconds)
-    const intervalId = setInterval(check_plugin_updates, 10000);
-     // Clear interval on component unmount
-     return () => clearInterval(intervalId);
-    }, []);
-
-
-    // console.log(user_daily_login_info);  
-    // console.log(chartdata);  
-
+    const intervalId = setInterval(check_plugin_updates, 2000);
+    // Clear interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className='wcs_chart'>
@@ -109,8 +97,8 @@ const WCSChart = () => {
             <CartesianGrid strokeDasharray="3 3" className='wcs_chartGrid'/>
             <Tooltip />
             <Area type="monotone" dataKey="Failed" stroke="red" fillOpacity={1} fill="url(#colorFailed)" />
-            <Area type="monotone" dataKey="Success" stroke="#ff7300" fillOpacity={1} fill="url(#colorSuccess)" />
-            <Area type="monotone" dataKey="Total" stroke="#82ca9d" fillOpacity={1} fill="url(#colorNew)" />
+            <Area type="monotone" dataKey="Person" stroke="#ff7300" fillOpacity={1} fill="url(#colorSuccess)" />
+            <Area type="monotone" dataKey="TotalLogin" stroke="#82ca9d" fillOpacity={1} fill="url(#colorNew)" />
             <Area type="monotone" dataKey="Attempt" stroke="#8884d8" fillOpacity={1} fill="url(#colorFailed)" />
         </AreaChart>
       </ResponsiveContainer>

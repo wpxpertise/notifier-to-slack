@@ -215,11 +215,23 @@ const WooCommerce = () => {
 
           <div className='wcs-player-wrapper'>
                 <ReactPlayer
-                  className='wcs-react-player'
-                  url='https://youtu.be/Ki40d-PDooo'
-                  width='100%'
-                  height='100%'
-                />
+                    className='wcs-react-player'
+                    url='https://youtu.be/Ki40d-PDooo'
+                    width='100%'
+                    height='100%'
+                    controls={true}
+                    light={true}
+                    config={{
+                      youtube: {
+                        playerVars: {
+                          modestbranding: 1,
+                          showinfo: 0,
+                        },
+                      },
+                    }}
+                    iframe
+                  />
+
             </div>
 
         </div>

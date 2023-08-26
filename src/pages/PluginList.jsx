@@ -195,12 +195,30 @@ const PluginList = () => {
                   {/* video  */}
 
                   <div className='wcs-player-wrapper'>
-                    <ReactPlayer
+                    {/* <ReactPlayer
                       className='wcs-react-player'
                       url='https://youtu.be/uuN7O5lqezU'
                       width='100%'
                       height='100%'
-                    />
+                    /> */}
+
+                  <ReactPlayer
+                    className='wcs-react-player'
+                    url='https://youtu.be/uuN7O5lqezU'
+                    width='100%'
+                    height='100%'
+                    controls={true}
+                    light={true}
+                    config={{
+                      youtube: {
+                        playerVars: {
+                          modestbranding: 1,
+                          showinfo: 0,
+                        },
+                      },
+                    }}
+                    iframe
+                  />
                 </div>
                   
               </div>

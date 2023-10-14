@@ -74,6 +74,8 @@ class WPNTS_PluginUpdate {
 		if ( isset($schedules_interval->interval_plugin_update) ) {
 			$wpnts_time = $schedules_interval->interval_plugin_update ?? '100';
 		}
+
+		$updatenotification = null;
 		if ( isset($schedules_interval->updatenotification) ) {
 			$updatenotification = $schedules_interval->updatenotification ?? 'false';
 		}

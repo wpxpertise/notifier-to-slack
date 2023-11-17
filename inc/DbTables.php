@@ -11,11 +11,11 @@ namespace WPNTS\Inc;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
- * WPNTS_DbTables Class Create Chat box database table
+ * DbTables Class Create Chat box database table
  *
  * @since 1.0.0
  */
-final class WPNTS_DbTables {
+final class DbTables {
 	/**
 	 * Holds the instance of the option table.
 	 *
@@ -56,18 +56,30 @@ final class WPNTS_DbTables {
 
 		];
 
+		$wpnts_webhook_site_settings = [
+			'webhook' => 'https://hooks.slack.com/your-services/',
+			'intervalDays' => -1,
+			'sitessecurityissuesInterval' => 1500,
+			'sitessecurityissuesInterval' => 1500,
+			'wpconfigmodification' => false,
+			'htaccessmodification' => false,
+
+		];
+
 		$wpnts_plugin_list = [
 			'id' => '1',
 			'title' => 'admin-chat-box',
 			'content' => 'admin-chat-box',
 		];
 
-		add_option( 'wpnts_schedules_interval', json_encode($wpnts_default_interval) );
+		add_option( 'wpnts_default_interval', json_encode($wpnts_default_interval) );
 		add_option( 'wpnts_schedules_interval_site_settings', json_encode($wpnts_schedules_interval_site_settings) );
+		add_option( 'wpnts_webhook_site_settings', json_encode($wpnts_webhook_site_settings) );
 		add_option( 'wpnts_plugin_list', json_encode($wpnts_plugin_list) );
 		add_option( 'wpnts_review_last_sent_time', 0 );
 		add_option( 'wpnts_last_sent_time', 0 );
 		add_option( 'wpnts_last_plugin_updates', 0 );
+		add_option('wpnts_first_saturday_reset_done', "false");
 
 	}
 

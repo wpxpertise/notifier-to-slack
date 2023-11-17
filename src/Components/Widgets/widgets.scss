@@ -7,7 +7,7 @@
     -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
     box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
     //@at-root
-    height: 120px;
+    height: 150px;
 
     //@at-root
     .wcs_left, .wcs_right{
@@ -17,7 +17,7 @@
 
         .wcs_title{
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
             color: rgb(160, 160, 160);
             .wcs_tooltip_icon{
                 width: 13px;
@@ -90,6 +90,38 @@
         
         
     }
+
+    .wcs_left{
+        span.wcs_counter.list_of_plug.lat_active_plugin_name,
+        span.wcs_counter.list_of_plug.total_deactivaed_plugin,
+        span.wcs_counter.list_of_plug.todays_who_logged,
+        span.wcs_counter.list_of_plug.todays_who_out {
+            overflow-y: scroll;
+            font-size: 10px;
+        }
+
+        span.wcs_counter.list_of_plug.lat_active_plugin_name::-webkit-scrollbar,
+        span.wcs_counter.list_of_plug.total_deactivaed_plugin::-webkit-scrollbar,
+        span.wcs_counter.list_of_plug.todays_who_out::-webkit-scrollbar,
+        span.wcs_counter.list_of_plug.todays_who_logged::-webkit-scrollbar {
+            width: 2px; /* Adjust the width as needed */
+        }
+        
+        span.wcs_counter.list_of_plug.lat_active_plugin_name::-webkit-scrollbar-thumb,
+        span.wcs_counter.list_of_plug.total_deactivaed_plugin::-webkit-scrollbar-thumb,
+        span.wcs_counter.list_of_plug.todays_who_out::-webkit-scrollbar-thumb,
+        span.wcs_counter.list_of_plug.todays_who_logged::-webkit-scrollbar-thumb {
+            background-color: #942BB5; /* Adjust the color as needed */
+        }  
+
+        
+
+        ol.lat_active_plugin_name {
+            font-size: 12px;
+            // overflow-y: scroll;
+        }   
+    }
+    
 }
 
 // free badge and opacity
@@ -119,14 +151,5 @@
             to{text-shadow:0px 0px 20px #fff,0px 0px 20px #614ad3;}
           }
     }
-    .wec_left_free{
-        opacity: 0.4;
-        background-color: rgb(250,250,250,0.2);  
-    }
-    .wec_right_free{
-        opacity: 0.4;
-        background-color: rgb(250,250,250,0.2);  
-    }
-
     
 }

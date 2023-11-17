@@ -1,125 +1,156 @@
-.wcsmodalBackground{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // position: absolute;
+.wcsmodalBackground {
     position: fixed;
     float: left;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    background: #fff;
+    width: 460px;
+    height: auto;
+    border-radius: 20px;
+    text-align: left;
+    padding: 24px 24px;
 
+    @media only screen and (max-width: 1370px) {
+        width: 70%;
+        max-width: 350px;
+        height: 75%;
+    }
 
-    .wcsmodalContainer{
-        width: 450px;
-        height: 450px;
-        border-radius: 12px;
-        // background-color: white;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        display: flex;
-        flex-direction: column;
-        padding: 25px;
-        // background-image: url('../../../assets/image.webp');
-        background: #064950;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        background-size: 100% 100%;
+    .support-body {
+        .spt-header {
+            display: flex;
+            align-items: left;
+            flex-direction: column;
 
-        color: white;
-        .wcstitleCloseBtn button {
-            color: rgb(221, 221, 167);
+            .brandlogo {
+                text-align: left;
+                width: 5px;
+                height: 5px;
+                position: relative;
+
+                .close {
+                    position: absolute;
+                    left: 433px;
+                    top: 0px;
+                    background: unset;
+                    color: unset;
+                    border: none;
+                    cursor: pointer;
+
+                    button {
+                        background: unset;
+                        border: unset;
+                        width: 12px;
+                        height: 12px;
+                        cursor: pointer;
+
+                    }
+                }
+
+                @media only screen and (max-width: 1370px) {
+                    .close {
+                        position: absolute;
+                        left: 321px;
+                        top: 0px;
+                        background: unset;
+                        color: unset;
+                        border: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            h3 {
+                text-align: left;
+                margin-left: 10px;
+                font-family: Inter;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 16px;
+            }
         }
 
-        .wcsmodaltitle{
-            display: inline-block;
+        .spt-content {
+            .template {
+                background-color: #F9FAFB; // Light white color
+                padding: 10px;
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                border-radius: 10px;
+                position: relative;
+                transition: box-shadow 0.3s ease;
+
+                // Add box shadow on hover
+                &:hover {
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+                    cursor: pointer;
+                }
+
+                .logo {
+                    text-align: left;
+                    margin: 8px;
+                }
+
+                .logo.facebook img {
+                    width: 43px;
+                    margin-right: 19px;
+                }
+
+                .content {
+                    margin-left: 10px;
+
+                    .spt-title {
+                        font-weight: bold;
+                        text-align: left;
+                    }
+
+                    .spt-details {
+                        margin-top: 5px;
+                    }
+                }
+
+                .iconmark {
+                    position: absolute;
+                    right: 50px;
+                    opacity: 0;
+                    transition: opacity 0.3s ease, transform 0.3s ease;
+                    transform: translateX(0);
+                }
+
+                &:hover .iconmark {
+                    // right: 15px;
+                    opacity: 1;
+                    transform: translateX(20px);
+                }
+
+                @media only screen and (max-width: 1370px) {
+                    background-color: #F9FAFB;
+                    padding: 0px;
+                    margin-top: 5px;
+                    display: flex;
+                    align-items: center;
+                    border-radius: 10px;
+                    position: relative;
+                    transition: box-shadow 0.3s ease;
+                }
+            }
+        }
+
+        .spt-footer {
             text-align: center;
             margin-top: 10px;
-            h1{
-                color: white;
-                margin-bottom: 30px;
-            }
-            h5.yrprice {
-                color: #ff03e7 !important;
-            }
-         
-            h2.yrprice {
-                color: #ffbc00;
+
+            .spt-footer-content {
+                margin-top: 25px;
             }
 
-            span.wcs_count{
-                font-size: 55px;
-                animation-name:glow;
-                animation-duration:1s;
-                animation-iteration-count:infinite;
-                animation-direction:alternate;
-        
-                @keyframes glow{
-                    from{text-shadow:0px 0px 5px #fff,0px 0px 5px #614ad3;}
-                    to{text-shadow:0px 0px 20px #fff,0px 0px 20px #614ad3;}
-                  }
-            }
-            span.wcs_count_text {
-                writing-mode: vertical-rl;
-                font-size: 22px;
-                color: rgb(253, 251, 253);
-                animation-name:glow;
-                animation-duration:1s;
-                animation-iteration-count:infinite;
-                animation-direction:alternate;
-        
-                @keyframes glow{
-                    from{text-shadow:0px 0px 5px rgb(233, 57, 233),0px 0px 5px #614ad3;}
-                    to{text-shadow:0px 0px 20px rgb(233, 57, 233),0px 0px 20px #614ad3;}
-                  }
-
+            a {
+                text-decoration: none;
+                color: #007bff; // Link color
             }
 
-            span.wcs_star{
-                color: rgb(250, 250, 250);
-            }
-            span.wcs_timer{
-                font-size:38px;
-                padding: 20px;
-            }
-        }
-        .wcstitleCloseBtn{
-            display: flex;
-            justify-content: flex-end;
-            button {
-                background-color: transparent;
-                border: none;
-                font-size: 25px;
-                cursor: pointer;
-            }
-        }
-        .wcsmodalbody{
-            flex: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.7rem;
-            text-align: center;
-        }
-        .wcsmodalfooter{
-            flex: 20%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            button{
-                width: 150px;
-                height: 45px;
-                margin: 10px;
-                border: none;
-                background-color: cornflowerblue;
-                color: white;
-                border-radius: 8px;
-                font-size: 20px;
-                cursor: pointer;
-            }
-            #cancelBtn {
-                background-color: crimson;
-            }
         }
     }
 }
@@ -131,16 +162,4 @@
     width: 100%;
     height: 100%;
     background: rgb(0 0 0 / 20%);
-}
-
-.wcsmodalBackground .wcsmodalContainer .wcsmodaltitle span.lifeprices {
-    font-size: 24px;
-}
-
-span.wcs-agree {
-    color: #ffc045;
-}
-
-.wcsmodalBackground .wcsmodalContainer .wcsmodalfooter button:hover {
-    background: #1c70bf;
 }

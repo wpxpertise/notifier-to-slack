@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sabbirsam/Admin-Chat-Box.git"
+    "url": "git+https://github.com/sabbirsam/wp-notifier-to-slack-free"
   },
   "keywords": [
     "notifier"
@@ -18,9 +18,9 @@
   "author": "devsabbirahmed",
   "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/sabbirsam/Admin-Chat-Box/issues"
+    "url": "https://github.com/sabbirsam/wp-notifier-to-slack-free/issues"
   },
-  "homepage": "https://github.com/sabbirsam/Admin-Chat-Box#readme",
+  "homepage": "https://github.com/sabbirsam/wp-notifier-to-slack-free#readme",
   "devDependencies": {
     "@wordpress/scripts": "^25.2.0"
   },
@@ -54,6 +54,7 @@
     "recharts": "^2.3.2",
     "sass": "^1.55.0",
     "scss": "^0.2.4",
+    "svg": "^0.1.0",
     "sweetalert2": "^11.6.5",
     "timeago-react": "^3.0.5",
     "tippy": "0.0.0",

@@ -11,11 +11,11 @@ namespace WPNTS\Inc;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
- * WPNTS_BaseController Class
+ * BaseController Class
  *
  * @since 1.0.0
  */
-class WPNTS_BaseController {
+class BaseController {
 	/**
 	 * $plugin_url Holds the path of the root directory.
 	 *

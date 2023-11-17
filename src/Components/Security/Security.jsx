@@ -4,6 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReactSwitchreview from 'react-switch'
 import ReactSwitchsupport from 'react-switch'
+import ReactPlayer from 'react-player'
 import Modal from '../Modal/Modal';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -138,25 +139,35 @@ const Security = () => {
                     </div>
                 </div>
           
-                {/* <div className="formInput"> 
-                    <label htmlFor="intervalDays">How many days you want-add last days</label>
-                    <div className="wpnts-setting">
-                        <input type="text" placeholder="-1" name="intervalDays" required onChange={handleChange} value={wpntswebhook_site_settings.intervalDays}/>
-                    </div>
-                </div>
-
-                
-                <div className="formInput">
-                    <label htmlFor="sitessecurityissuesInterval">Time Interval/Second</label>
-                    <div className="wpnts-setting">
-                        <input type="text" placeholder="add interval" name="sitessecurityissuesInterval" required onChange={handleChange} value={wpntswebhook_site_settings.sitessecurityissuesInterval}/>
-                    </div>
-                </div> */}
-
                 <button className="save-webhook" onClick={handleSave}>SAVE</button>
             </form>
 
         </div>
+
+        <div className="acb_video">
+
+          <div className='wcs-player-wrapper'>
+                <ReactPlayer
+                    className='wcs-react-player'
+                    url='https://youtu.be/1BhY7IfppVM'
+                    width='100%'
+                    height='100%'
+                    controls={true}
+                    light={true}
+                    config={{
+                      youtube: {
+                        playerVars: {
+                          modestbranding: 1,
+                          showinfo: 0,
+                        },
+                      },
+                    }}
+                    iframe
+                  />
+            </div>
+
+        </div>
+
     </div>
         
   )

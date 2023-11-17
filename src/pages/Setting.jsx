@@ -14,9 +14,9 @@ const Setting = () => {
       <div className="acb_mails_container">
         {/* Start  */}
           <div className="acb_top">
-              <h1 className="setting_panel">Slack -<a target="_blank" href="#">Add Slack Webhook</a></h1>
+              <h1 className="setting_panel">Slack -<a target="_blank" href="https://slack.com/signin">Add Slack Webhook</a></h1>
              
-              <h1 className="tesing_panel">Live view</h1>
+              <h1 className="tesing_panel">Configuration panel with video tutorial</h1>
           
           </div>
  

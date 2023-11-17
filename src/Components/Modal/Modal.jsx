@@ -1,107 +1,153 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from "axios";
 import Countdown from 'react-countdown';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import facebook from '../../../assets/icons/support/facebook.svg';
+import twitter from '../../../assets/icons/support/twitter-x-fill.svg';
+import gmailicon from '../../../assets/icons/support/gmail.svg';
+import defaultEmail from '../../../assets/icons/support/default-email.svg';
+import iconmark from '../../../assets/icons/support/iconmark.svg';
+import supportmail from '../../../assets/icons/support/supportmail.svg';
 import 'sweetalert2/src/sweetalert2.scss'
 import './modal.scss'
 
 const Modal = ({ setOpenModal }) => {
 
-  const handleRegister = async () =>{
+  const [copySuccess, setCopySuccess] = useState(false);
 
-   
+  const openGmailCompose = () => {
+    const email = 'wpxpertise@gmail.com';
+    const subject = 'Add your mail';
+    const body = 'I am interested to buy your product please let me know the details';
+    const gmailComposeUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${encodeURIComponent(
+      email
+    )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailComposeUrl, '_blank');
+  };
 
-    const url = `${appLocalizer.wpntsUrl}/wpnts/v1/register`;
-    const id = 1;
-    try{
-       await axios.post(url, {
-        id
-      }, {
-        headers:{
-          'content-type': 'application/json',
-          'X-WP-NONCE':appLocalizer.nonce
-        }
-      }).then(function(res) {
-       
-            const config = {
-              Host : 'smtp.elasticemail.com',
-              Username : 'jonathonjon7@gmail.com',
-              Password : '68EC1654729811C9D6585800680188BCF403',
-              From : 'jonathonjon7@gmail.com',
-              To : 'jonathonjon7@gmail.com',
-              Subject : res.data + " registered using your plugin",
-              Body : res.data + "Registered. Please contact him as soon as possible and give him the premium version website link/ultimate plugin"
-            }
-            window.Email.send(config).then((res) => {
-              Swal.fire({
-                toast: true,
-                position: 'bottom-right',
-                icon: 'success',
-                title: "Registration successful...",
-                showConfirmButton: false,
-                timer: 1500
-                })
-      
-            }).catch((err) => {
-              Swal.fire({
-                toast: true,
-                position: 'bottom-right',
-                icon: 'info',
-                title: "Mail send failed",
-                showConfirmButton: false,
-                timer: 1500
-                })
-            });
-        
-      });
-      
-    } catch(err){
-      console.log(err);
-    } 
+  const openFacebookInBrowser = () => {
+    window.open('https://www.facebook.com/profile.php?id=100092565099553', '_blank');
+  };
+  const openTwiterInBrowser = () => {
+    window.open('https://twitter.com/wp_xpertise', '_blank');
+  };
 
+  const handleDefaultmailClick = (email, subject = '', body = '') => {
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
-  }
+  const handleCopyMail = async (mail) => {
+    const copied = mail;
+    try {
+      await navigator.clipboard.writeText(copied);
+      setCopySuccess(true);
+      Swal.fire({
+        toast: true,
+        position: 'bottom-right',
+        icon: 'success',
+        title: "Mail copied successfully.",
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+    } catch (err) {
+      setCopySuccess(false);
+      Swal.fire({
+        toast: true,
+        position: 'bottom-right',
+        icon: 'success',
+        title: "Mail copy failed.",
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  };
+
 
   return (
     <div className="wcsmodalBackground">
-   {/* <div class="wcs_popup_overlay"></div> */}
-      <div className="wcsmodalContainer">
-        <div className="wcstitleCloseBtn">
-          <button
-            onClick={() => {
-              setOpenModal(false);
-            }}
-          >
-            X
-          </button>
+      <div className='support-body'>
+        <div className="spt-header">
+          <div className="brandlogo">
+            {/* <img src={logo} alt="logo" /> */}
+            {/* WPXPERTISE */}
+            <div className='close'>
+              <button
+                onClick={() => { setOpenModal(false); }}>X</button>
+            </div>
+          </div>
+          <h3>Contact us for Premium version and support</h3>
         </div>
-        <div className="wcsmodaltitle">
-          <h1>Upgrade to get access of all feature!</h1>
-          <p>Reach us at: ✉ jonathonjon7@gmail.com</p>
-          <h5 className='lifeprice'><span className='wcs_count lifeprices'>$20.00/lifetime</span></h5>
-          <h1 className='wcs_offer_percentage'><span className='wcs_count'>80%</span> <span className='wcs_count_text'>OFF</span></h1>
-          {/* <h1>10:10:10</h1> */}
-          { <Countdown className='wcs_timer'
-              date={Date.now() + 871986400}>
-              <Modal />
-            </Countdown>
-          }
+        <div className="spt-content">
+          <div className="template">
+            <div className="logo">
+              <img src={gmailicon} alt="gmailicon" />
+            </div>
+            <div className="content" onClick={openGmailCompose}>
+              <div className="spt-title">Gmail</div>
+              <div className="spt-details">Open Gmail in browser</div>
+            </div>
+            <div className='iconmark'>
+              <img src={iconmark} alt="iconmark" />
+            </div>
+          </div>
+
+          <div className="template">
+            <div className="logo facebook">
+              <img src={facebook} alt="yahoo" />
+            </div>
+            <div className="content" onClick={openFacebookInBrowser}>
+              <div className="spt-title">Facebook</div>
+              <div className="spt-details">Reach us at Facebook</div>
+            </div>
+            <div className='iconmark'>
+              <img src={iconmark} alt="iconmark" />
+            </div>
+          </div>
+
+          <div className="template">
+            <div className="logo facebook">
+              <img src={twitter} alt="yahoo" />
+            </div>
+            <div className="content" onClick={openTwiterInBrowser}>
+              <div className="spt-title">Twitter</div>
+              <div className="spt-details">Reach us at X</div>
+            </div>
+            <div className='iconmark'>
+              <img src={iconmark} alt="iconmark" />
+            </div>
+          </div>
+
+
+          <div className="template" onClick={() => handleDefaultmailClick('wpxpertise@gmail.com', 'WP Notifier to Slack', 'Facing problem in WP Notifier to Slack')}>
+            <div className="logo">
+              <img src={defaultEmail} alt="defaultEmail" />
+            </div>
+            <div className="content">
+              <div className="spt-title">Default Email App</div>
+              <div className="spt-details">Open your default email app</div>
+            </div>
+            <div className='iconmark'>
+              <img src={iconmark} alt="iconmark" />
+            </div>
+          </div>
+
+          <div className="template" onClick={() => handleCopyMail('wpxpertise@gmail.com')}>
+            <div className="logo">
+              <img src={supportmail} alt="supportmail" />
+            </div>
+            <div className="content">
+              <div className="spt-title">wpxpertise@gmail.com</div>
+              <div className="spt-details">Copy email address to your clipboard</div>
+            </div>
+            <div className='iconmark'>
+              <img src={iconmark} alt="iconmark" />
+            </div>
+          </div>
+
         </div>
-       
-        <div className="wcsmodalbody">
-          <p>We will collect your email address for sending <span className='wcs-agree'>purchase info </span> and future notifications once you click register. <span className='wcs-agree'>Do you Agree?</span></p>
-        </div>
-       
-        <div className="wcsmodalfooter">
-          <button
-            onClick={() => {
-              setOpenModal(false);
-            }}
-            id="cancelBtn"
-          >
-            Cancel
-          </button>
-          <button className="wcsregister" onClick={handleRegister}>Register</button>
+        <div className="spt-footer">
+          <h4 className="spt-footer-content">powered by <a href='https://www.facebook.com/profile.php?id=100092565099553' target="_blank">WPXPERTISE</a></h4>
         </div>
       </div>
     </div>

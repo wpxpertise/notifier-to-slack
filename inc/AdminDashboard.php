@@ -15,7 +15,7 @@ defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
  *
  * @since 1.0.0
  */
-class WPNTS_AdminDashboard {
+class AdminDashboard {
 
 	/**
 	 * Construct method.
@@ -60,7 +60,9 @@ class WPNTS_AdminDashboard {
 	 * @since 1.0.0
 	 */
 	public function notifier_pages() {
-		require_once plugin_dir_path(__FILE__) . '../template/WPNTS_Dashboard.php';
+		 ?>
+		 <div id="wpcts_dashboard"></div> 
+		 <?php
 	}
 	/**
 	 * Author page
@@ -68,7 +70,9 @@ class WPNTS_AdminDashboard {
 	 * @since 1.0.0
 	 */
 	public function notifier_author_pages() {
-		 require_once plugin_dir_path(__FILE__) . '../template/WPNTS_Author.php';
+		 ?>
+		 <div id="wpcts_authors"></div> 
+		 <?php
 	}
 	/**
 	 * Setting page
@@ -76,7 +80,9 @@ class WPNTS_AdminDashboard {
 	 * @since 1.0.0
 	 */
 	public function notifier_setting() {
-		 require_once plugin_dir_path(__FILE__) . '../template/WPNTS_Setting.php';
+		 ?>
+		 <div id="wpcts_setting"></div> 
+		 <?php
 	}
 
 }

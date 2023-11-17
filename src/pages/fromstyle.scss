@@ -5,310 +5,349 @@ $animation-duration: 0.5s;
 $animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 
-.acb_add_mail{
-    display: flex;
-    padding: 20px;
-    gap: 20px;
+.acb_add_mail {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
 
-    .acb_mails_container{
-        flex: 6;
+  .acb_mails_container {
+    flex: 6;
 
-        .acb_top, .acb_bottom{
-            -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
-            box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
-            margin: 20px;
+    .acb_top,
+    .acb_bottom {
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      margin: 20px;
+      padding: 10px;
+      // to make side by side
+      display: flex;
+
+      // .getsupport {}
+
+      img.wpnts_logo_footer {
+        width: 100px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin-right: 35px;
+        margin-top: 13px;
+        cursor: pointer;
+      }
+
+
+      h1 {
+        color: #774646;
+        font-size: 20px;
+      }
+
+      h1.setting_panel {
+        flex: 3;
+      }
+
+      h1.tesing_panel {
+        flex: 3;
+        margin-left: 250px;
+      }
+
+      h1.setting_panel a {
+        color: #774646;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+          color: teal;
+        }
+      }
+
+      // left ------------------------------------------------
+      .acb_left {
+        flex: 3;
+        text-align: center;
+        margin: 25px;
+
+        box-shadow: 2px 4px 10px 1px rgb(201 201 201 / 47%);
+        padding: 14px;
+
+        .wpnts-form-list {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 20px;
+
+          button.wpnts-add-form {
+            background-color: teal;
+            position: relative;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            float: left;
+            font-weight: 700;
             padding: 10px;
-            // to make side by side
-            display: flex;
+            width: 160px;
+            margin-bottom: 11px;
+            border-radius: 3px;
 
-            img.wpnts_logo_footer {
-              width: 100px;
-              height: 70px;
-              display: flex;
-              align-items: center;
-              text-align: center;
-              margin-right: 5px;
+            &:hover {
+              background-color: #025d5d;
+            }
+
+            span.wcs_tooltip_class {
+              position: absolute;
+              top: 12px;
+              right: 27px;
+
+              svg.wcs_tooltip_icon {
+                font-size: 15px;
+              }
+            }
+
           }
 
 
-            h1{
-                color: #774646;
-                font-size: 20px;
+
+          .wpnts-save-form {
+            margin-left: 10px;
+            background-color: #0077c2;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            float: left;
+            font-weight: 700;
+            padding: 10px;
+            width: 160px;
+            margin-bottom: 11px;
+            border-radius: 3px;
+
+            &:hover {
+              background-color: #005b99;
             }
-            h1.setting_panel{flex: 3;}
-            h1.tesing_panel{flex: 3;}
-            h1.setting_panel a {
-                color: #774646;
-                text-decoration: none;
-                cursor:pointer;
-                &:hover{
-                    color: teal;
-                }
+          }
+
+
+        }
+
+        .wpnts-form {
+          border: 1px solid #d3d3d3;
+          border-radius: 4px;
+          margin-bottom: 20px;
+          width: 500px;
+
+          .wpnts-form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+
+            width: $div-width;
+            background-color: $main-color;
+            background-image: linear-gradient(to right, $main-color, darken($main-color, 10%));
+            background-size: $div-width*2 100%;
+            transition: background-position $animation-duration $animation-timing-function;
+
+            &:hover {
+              background-position: -419px 0;
+              animation: wave $animation-duration $animation-timing-function;
             }
-            // left ------------------------------------------------
-            .acb_left{
-                flex: 3; 
-                text-align: center; 
-                margin: 25px;
 
-                box-shadow: 2px 4px 10px 1px rgb(201 201 201 / 47%);
-                padding: 14px;
-                
-                .wpnts-form-list {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    margin: 20px;
-                
-                    button.wpnts-add-form {
-                        background-color: teal;
-                        position: relative;
-                        border: none;
-                        color: #fff;
-                        cursor: pointer;
-                        float: left;
-                        font-weight: 700;
-                        padding: 10px;
-                        width: 160px;
-                        margin-bottom: 11px;
-                        border-radius: 3px;
-                        &:hover {
-                          background-color: #025d5d;
-                        }
 
-                        span.wcs_tooltip_class {
-                          position: absolute;
-                          top: 12px;
-                          right: 27px;
+            // start 
+            @keyframes wave {
+              0% {
+                background-position: 0 0;
+              }
 
-                          svg.wcs_tooltip_icon {
-                            font-size: 15px;
-                          }
-                      }
-                      
-                    }
-                  
-                    
+              100% {
+                background-position: $div-width 0;
+              }
+            }
 
-                    .wpnts-save-form{
-                      margin-left: 10px;
-                      background-color: #0077c2;
-                      border: none;
-                      color: #fff;
-                      cursor: pointer;
-                      float: left;
-                      font-weight: 700;
-                      padding: 10px;
-                      width: 160px;
-                      margin-bottom: 11px;
-                      border-radius: 3px;
+            // end 
 
-                      &:hover {
-                        background-color: #005b99;
-                      }
-                    }
-                    
+            h2 {
+              margin: 0;
+              font-size: 18px;
+            }
 
-                  }
-                  
-                  .wpnts-form {
-                    border: 1px solid #d3d3d3;
-                    border-radius: 4px;
-                    margin-bottom: 20px;
-                    width: 500px;
-                  
-                    .wpnts-form-header {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      padding: 10px 20px;
-                      background-color: #f5f5f5;
-                      cursor: pointer;
+            button.wpnts-delete-form {
+              border: none;
+              background: none;
+            }
 
-                      width: $div-width;
-                      background-color: $main-color;
-                      background-image: linear-gradient(to right, $main-color, darken($main-color, 10%));
-                      background-size: $div-width*2 100%;
-                      transition: background-position $animation-duration $animation-timing-function;
-   
-                      &:hover {
-                        background-position: -419px 0;
-                        animation: wave $animation-duration $animation-timing-function;
-                      }
-                      
+            .wpnts-delete-button {
+              padding: 5px 10px;
+              font-size: 20px;
+              background-color: none;
+              color: teal;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: all 0.2s;
 
-                      // start 
-                      @keyframes wave {
-                        0% {
-                          background-position: 0 0;
-                        }
-                        100% {
-                          background-position: $div-width 0;
-                        }
-                      }
+              &:hover {
+                color: #c62828;
+              }
+            }
 
-                      // end 
-                  
-                      h2 {
-                        margin: 0;
-                        font-size: 18px;
-                      }
-                  
-                      button.wpnts-delete-form {
-                        border: none;
-                        background: none;
-                      }
+          }
 
-                      .wpnts-delete-button {
-                        padding: 5px 10px;
-                        font-size: 20px;
-                        background-color: none;
-                        color: teal;
-                        border: none;
-                        border-radius: 4px;
-                        cursor: pointer;
-                        transition: all 0.2s;
-                  
-                        &:hover {
-                          color: #c62828;
-                        }
-                      }
- 
-                    }
-                  
-                    .wpnts-form-content {
-                      padding: 10px 20px;
-                      background-color: #ffffff;
-                      
+          .wpnts-form-content {
+            padding: 10px 20px;
+            background-color: #ffffff;
 
-                        input{
-                          width: 100%;
-                          padding: 5px;
-                          border: none;
-                          border-bottom: 1px solid gray;
 
-                          &:focus{
-                              outline: none;
-                              box-shadow: none;
-                          }
+            input {
+              width: 100%;
+              padding: 5px;
+              border: none;
+              border-bottom: 1px solid gray;
 
-                      }
+              &:focus {
+                outline: none;
+                box-shadow: none;
+              }
 
-                    }
-                  }
+            }
 
-                  //webhook setting
+          }
+        }
 
-                form{
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap; // to set all inside the wrap with the given width screen
-                    gap: 20px;
-                    label{
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        white-space: nowrap;
-                    }
-                    .formInput{
-                        width: 60%;
-                        textarea{
-                            height: 150px;
-                        }
-                        input{
-                            width: 100%;
-                            padding: 5px;
-                            border: none;
-                            border-bottom: 1px solid gray;
-                            background-color: #F0F0F1;
-    
-                            &:focus{
-                                outline: none;
-                                box-shadow: none;
-                            }
-    
-                        }
+        //webhook setting
 
-                        .wpnts-setting{
-                          position: relative;
-                          .passimg{
-                              /* position: absolute;
+        form {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap; // to set all inside the wrap with the given width screen
+          gap: 20px;
+
+          label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+          }
+
+          .formInput {
+            width: 60%;
+
+            textarea {
+              height: 150px;
+            }
+
+            input {
+              width: 100%;
+              padding: 5px;
+              border: none;
+              border-bottom: 1px solid gray;
+              background-color: #F0F0F1;
+
+              &:focus {
+                outline: none;
+                box-shadow: none;
+              }
+
+            }
+
+            .wpnts-setting {
+              position: relative;
+
+              .passimg {
+                /* position: absolute;
                               right: 0px;
                               font-size: 18px;
                               top: -17px;
                                 // top: 10px; */
-                            position: absolute;
-                            left: 90px;
-                            font-size: 18px;
-                            top: -19px;
-                          }
-                        }
-                        
-                      }
-
-                      .save-webhook{
-                        width: 160px;
-                        padding: 10px;
-                        border: none;
-                        background-color: teal;
-                        color: white;
-                        font-weight: bold;
-                        cursor: pointer;
-                        float: left;
-                      }
-                  }
-                
+                position: absolute;
+                left: 90px;
+                font-size: 18px;
+                top: -19px;
+              }
             }
 
-            // left ------------------------------------------------
-            .acb_right{
-                flex: 3; 
-                margin: 25px;
-                // border-right: 2px solid teal;
-                margin-top: 37px;
+          }
 
-            
-                // player 
-                .wcs-player-wrapper {
-                    position: relative;
-                    padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
-                    margin-top: 14px;
-                    border: 6px solid white;
-
-                    .wcs-react-player {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                      }
-                  }
-                  // Toogle 
-                  .wpnts-switch-review {
-                    font-size: 17px;
-                    text-align: left;
-                    display: flex;
-                    margin-bottom: 25px;
-                  }
-                  .reviewSwitch {
-                    margin-left: 19px;
-                  }
-                  
-                  .wpnts-switch-support {
-                    font-size: 17px;
-                    text-align: left;
-                    display: flex;
-                    margin-bottom: 23px;
-                  }
-                  .supportSwitch {
-                    margin-left: 12px;
-                  }
-
-                  
-                  
-            }
+          .save-webhook {
+            width: 160px;
+            padding: 10px;
+            border: none;
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            float: left;
+          }
         }
 
-  
+      }
 
+      // left ------------------------------------------------
+      .acb_right {
+        flex: 3;
+        margin: 25px;
+        // border-right: 2px solid teal;
+        margin-top: 37px;
+
+
+        // player 
+        .wcs-player-wrapper {
+          position: relative;
+          padding-top: 56.25%;
+          /* Player ratio: 100 / (1280 / 720) */
+          margin-top: 14px;
+          border: 6px solid white;
+
+          .wcs-react-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+        }
+
+        // Toogle 
+        .wpnts-switch-review {
+          font-size: 17px;
+          text-align: left;
+          display: flex;
+          margin-bottom: 25px;
+        }
+
+        .reviewSwitch {
+          margin-left: 19px;
+        }
+
+        .wpnts-switch-support {
+          font-size: 17px;
+          text-align: left;
+          display: flex;
+          margin-bottom: 23px;
+        }
+
+        .supportSwitch {
+          margin-left: 12px;
+        }
+
+
+        .corn-link {
+          .setting_data {
+            a {
+              color: green;
+              cursor: pointer;
+
+              &:hover {
+                color: rgb(247, 113, 17);
+              }
+            }
+          }
+        }
+
+
+      }
     }
+
+
+
+  }
 }

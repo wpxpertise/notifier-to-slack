@@ -11,11 +11,11 @@ namespace WPNTS\Inc;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
- * WPNTS_DbTables Class Create Chat box database table
+ * DbTables Class Create Chat box database table
  *
  * @since 1.0.0
  */
-final class WPNTS_DbTables {
+final class DbTables {
 	/**
 	 * Holds the instance of the option table.
 	 *
@@ -72,7 +72,7 @@ final class WPNTS_DbTables {
 			'content' => 'admin-chat-box',
 		];
 
-		add_option( 'wpnts_schedules_interval', json_encode($wpnts_default_interval) );
+		add_option( 'wpnts_default_interval', json_encode($wpnts_default_interval) );
 		add_option( 'wpnts_schedules_interval_site_settings', json_encode($wpnts_schedules_interval_site_settings) );
 		add_option( 'wpnts_webhook_site_settings', json_encode($wpnts_webhook_site_settings) );
 		add_option( 'wpnts_plugin_list', json_encode($wpnts_plugin_list) );

@@ -1,20 +1,22 @@
-=== WP Notifier To Slack ===
+=== WP Notifier To Slack- Quick site security monitoring and reporting ===
 Contributors: wpxpertise, devsabbirahmed
-Tags: slack, notifications, support, customer service, team communication, productivity, review, feedback, webhook
+Tags: slack, notification, support, customer service, productivity, review, feedback, webhook, email, out of stock, waitlist, woocommerce, order notification, sales notification, woocommerce notification, notifier, security, monitoring, reporting, 2FA, malware, security, two factor, WAF
 Requires at least: 5.9
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.6
-Stable Tag: 1.6.4
+Stable Tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WPXpertise introduced WP Notifier to Slack, a powerful WordPress plugin designed to enhance your website management experience with real-time notifications seamlessly integrated into your Slack workspace. WP Notifier to Slack, the ultimate WordPress plugin for real-time notifications. Stay in the know with instant updates on plugin reviews, site security, user activity, WooCommerce events, comments, and plugin/theme/WP Core updates—all conveniently delivered to your Slack workspace. Enhance website management and security effortlessly with WP Notifier to Slack.
+WPXpertise has unveiled WP Notifier to Slack, a versatile Notification plugin with built in powerful feature to monitor WordPress websites. Here's everything that you can do with this plugin. It is designed to enhance your website management experience with real-time notifications seamlessly integrated into your Slack workspace. WP Notifier to Slack, the ultimate WordPress plugin for real-time notifications on each task such as Sales Notifier, Author plugin review and supports, Comment moderation, New order placement, New user registration, user login alert and mostly site most crucial file modification alert. Its is also widely acknowledged as WordPress security/security plugin. Stay in the know with instant updates on plugin reviews, site security, user activity, WooCommerce events, comments, and plugin/theme/WP Core updates—all conveniently delivered to your Slack workspace. Enhance website management and security effortlessly with WP Notifier to Slack.
+
+== You will still continue to receive all of your website's statistics even if there is no visitor traffic or login on your website. ==
 
 **WP Notifier To Slack**
 
 Notifier To Slack plugin has site monitoring dashboard. You will be visualise and notified promptly if any previously installed plugin is deactivated or uninstalled, or if a new plugin is added and activated in your website. This functionality can also assist plugin authors improving their response rate in responding to there plugin support cases in a timely manner and providing better customer assistance.
 
-[youtube https://youtu.be/uuN7O5lqezU]
+[youtube https://youtu.be/kBdKV4MqQvA]
 
 
 == 😍 Instant Author Plugin Review Notifications  ==
@@ -22,7 +24,7 @@ This feature is designed to keep WordPress authors and developers updated about 
 Whenever a user submits a review or rating for your WordPress plugin or theme, the "Notifier To Slack" plugin will instantly detect this event. 
 The plugin captures the details of the review, including the reivew title and ratting score and the content of the review itself with review page link.
 
-* [How to Add Instant Site Security in WP Notifier To Slack](https://youtu.be/c-xsCV_2iBc)
+* [How to Add Instant Author Plugin Review Notifications](https://youtu.be/c-xsCV_2iBc)
 
 Overall, the "Notifier To Slack" WordPress plugin's "Instant Author Plugin Review and Support Notifications" feature is a valuable tool for plugin and theme authors, as well as support teams, to actively engage with users, gather feedback, and provide timely assistance, all while integrating seamlessly with Slack for efficient communication.
 
@@ -133,6 +135,44 @@ You will not receive any notifications on Slack, but the plugin will still funct
 7. Setting page
 
 == Changelog ==
+
+= 1.9.0 - 17 Nov 2023 =
+- Add Support page
+- Optimize code and fix all other minor bugs
+
+= 1.8.2 - 17 Nov 2023 =
+- Enhanced Dashboard calculation time from WordPress REST API to Ajax
+
+= 1.8.1 - 09 Nov 2023 =
+- Enhanced compatibility to support WordPress 6.4
+- Fix fatal error site health status
+
+= 1.8.0 - 24 October 2023 =
+- Fix fatal error once use Support notification 
+- Add new Time Interval from review, support and days for all feature
+- Optimize code and fix all other minor bugs
+
+= 1.7.3 - 23 October 2023 =
+- Video tutorial update
+- Fix site health status problem and fatal error
+
+= 1.7.2 - 22 October 2023 =
+- Fix corn job runtime issues 
+
+= 1.7.1 - 22 October 2023 =
+- Maintenance Update
+
+= 1.7.0 - 16 October 2023 =
+- Add corn job to run anonymously 
+
+= 1.6.6 – 02 OCTOBER 2023 =
+- Fix: Timing accuracy problem
+- Fix: Review not sending in given time
+- Fix: Supports notification not sending in given time
+
+= 1.6.5 - 26 August 2023 =
+- Fix cross origin YouTube video playback console error
+- Improvement: Improve login chart and daily reset
 
 = 1.6.4 - 24 August 2023 =
 - Assets update

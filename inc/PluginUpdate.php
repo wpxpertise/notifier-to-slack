@@ -9,16 +9,16 @@
 
 namespace WPNTS\Inc;
 
-use \WPNTS\Inc\WPNTS_Activate;
-use \WPNTS\Inc\WPNTS_Deactivate;
+use \WPNTS\Inc\Activate;
+use \WPNTS\Inc\Deactivate;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
- * WPNTS_Update used to rest route created
+ * Update used to rest route created
  *
  * @since 1.0.0
  */
-class WPNTS_PluginUpdate {
+class PluginUpdate {
 
 	/**
 	 * Construct method.
@@ -86,7 +86,7 @@ class WPNTS_PluginUpdate {
 			$slack_webhook_url = $wpnts_webhook;
 
 			// Initialize the attachment handler.
-			$attachmentHandler = new WPNTS_SlackAttachment();
+			$attachmentHandler = new SlackAttachment();
 
 			$plugins = get_plugins();
 

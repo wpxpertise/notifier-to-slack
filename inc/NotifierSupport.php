@@ -9,9 +9,9 @@
 
 namespace WPNTS\Inc;
 
-use \WPNTS\Inc\WPNTS_Activate;
-use \WPNTS\Inc\WPNTS_Deactivate;
-use \WPNTS\Inc\WPNTS_SlackAttachment;
+use \WPNTS\Inc\Activate;
+use \WPNTS\Inc\Deactivate;
+use \WPNTS\Inc\SlackAttachment;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
@@ -19,7 +19,7 @@ defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
  *
  * @since 1.0.0
  */
-class WPNTS_NotifierSupport {
+class NotifierSupport {
 
 	/**
 	 * $unresolved_tickets Holds the path of the root directory.
@@ -37,7 +37,14 @@ class WPNTS_NotifierSupport {
 	 */
 	public function __construct() {
 		add_filter( 'cron_schedules', [ $this, 'wpnts_add_cron_interval' ]);
-		add_action( 'wpnts_corn_hook', [ $this, 'wpnts_support_tickets' ]);
+
+		$schedules_int = get_option( 'wpnts_default_interval');
+		$schedules_interval = json_decode($schedules_int);
+		$wpnts_activesupport = $schedules_interval->activesupport ?? 'false';
+
+		if ( true === $wpnts_activesupport ) {
+			add_action( 'wpnts_corn_hook', [ $this, 'wpnts_support_tickets' ]);
+		}
 	}
 
 	/**
@@ -47,7 +54,7 @@ class WPNTS_NotifierSupport {
 	 */
 	public function wpnts_add_cron_interval() {
 
-		$schedules_int = get_option( 'wpnts_schedules_interval');
+		$schedules_int = get_option( 'wpnts_default_interval');
 		$schedules_interval = json_decode($schedules_int);
 		$wpnts_time = $schedules_interval->interval ?? '250';
 
@@ -85,7 +92,7 @@ class WPNTS_NotifierSupport {
 		$last_sent_time = get_option('wpnts_last_sent_time', 3);
 		$current_time = time();
 
-		$schedules_int = get_option( 'wpnts_schedules_interval');
+		$schedules_int = get_option( 'wpnts_default_interval');
 		$schedules_interval = json_decode($schedules_int);
 		$wpnts_time = $schedules_interval->interval ?? '250';
 		$activesupport = $schedules_interval->activesupport ?? 'false';
@@ -102,7 +109,7 @@ class WPNTS_NotifierSupport {
 					$error_message = $response->get_error_message();
 					echo esc_attr( $error_message );
 				} else {
-					$schedules_int = get_option( 'wpnts_schedules_interval');
+					$schedules_int = get_option( 'wpnts_default_interval');
 					$schedules_interval = json_decode($schedules_int);
 					$wpnts_review_days = $schedules_interval->reviewDays;
 
@@ -138,32 +145,43 @@ class WPNTS_NotifierSupport {
 				/**
 				 * Send data to slack.
 				 */
-				$schedules_int = get_option( 'wpnts_schedules_interval');
+				$schedules_int = get_option( 'wpnts_default_interval');
 				$schedules_interval = json_decode($schedules_int);
 				$wpnts_webhook = $schedules_interval->webhook;
 
 				$webhook_url = $wpnts_webhook;
 
-				$attachmentHandler = new WPNTS_SlackAttachment();
+				$attachmentHandler = new SlackAttachment();
 
 				foreach ( $unresolved_tickets as $ticket ) {
 					$ticket_title = substr($ticket['title'], strpos($ticket['title'], ']') + 1);
 					$ticket_link = $ticket['link'];
 					$ticket_date = gmdate('F j, Y', $ticket['pubDate']);
-
 					// Handaler.
 					$attachmentHandler->addAttachment($ticket_title, $ticket_link, $ticket_date, '#ff0000', ':cry:');
 				}
 
 				$message = $attachmentHandler->getMessage();
 
-				wp_remote_post( $webhook_url, [
-					'body' => json_encode( $message ),
-					'headers' => [
-						'Content-Type' => 'application/json',
-					],
-				] );
+				if (is_array($message) && array_key_exists('attachments', $message)) {
+					$attachments = $message['attachments'];
+				
+					// Check if "attachments" is either empty or false.
+					if (!empty($attachments) && $attachments !== false) {
+						$support_message = json_encode($message);
 
+						if (!empty($support_message)) { 
+							wp_remote_post($webhook_url, [
+								'body' => $support_message,
+								'headers' => [
+									'Content-Type' => 'application/json',
+								],
+							]);
+						}
+					}
+				}
+					
+					
 			}
 			update_option('wpnts_last_sent_time', time());
 		}

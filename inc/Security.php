@@ -9,16 +9,16 @@
 
 namespace WPNTS\Inc;
 
-use \WPNTS\Inc\WPNTS_Activate;
-use \WPNTS\Inc\WPNTS_Deactivate;
+use \WPNTS\Inc\Activate;
+use \WPNTS\Inc\Deactivate;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
- * WPNTS_Security used to rest route created
+ * Security used to rest route created
  *
  * @since 1.0.0
  */
-class WPNTS_Security {
+class Security {
 
 	private $last_modified_times = [];
 	/**

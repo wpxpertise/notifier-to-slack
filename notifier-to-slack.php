@@ -11,7 +11,7 @@
  * Plugin Name: Notifier To Slack
  * Plugin URI: https://github.com/wpxpertise/
  * Description: Notifier To Slack allows users to receive instant notifications of their plugin activity, review and support requests directly in their Slack workspace.
- * Version:           1.6.4
+ * Version:           1.9.0
  * Requires at least: 5.9
  * Requires PHP:      5.6
  * Author:            WPXpertise
@@ -24,12 +24,12 @@
 
 // If direct access than exit the file.
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
-define( 'WP_NOTIFIER_TO_SLACK_VERSION', '1.6.4' );
+define( 'WP_NOTIFIER_TO_SLACK_VERSION', '1.9.0' );
 define( 'WP_NOTIFIER_TO_SLACK__FILE__', __FILE__ );
 define( 'WP_NOTIFIER_TO_SLACK_DIR', __DIR__ );
 define( 'WP_NOTIFIER_TO_SLACK_DIR_PATH', plugin_dir_path( WP_NOTIFIER_TO_SLACK__FILE__ ) );
 define( 'WP_NOTIFIER_TO_SLACK_URL', plugins_url( '', __FILE__ ) );
-define( 'WP_NOTIFIER_TO_SLACK_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'WP_NOTIFIER_TO_SLACK_DIR_URL', plugin_dir_url( __FILE__ ) ); // Directory URL.
 define( 'WP_NOTIFIER_TO_SLACK_NAME', plugin_dir_url( __FILE__ ) );
 
 if ( file_exists(dirname(__FILE__) . '/vendor/autoload.php') ) {
@@ -40,30 +40,32 @@ if ( file_exists(dirname(__FILE__) . '/vendor/autoload.php') ) {
 /**
  * All Namespace.
  */
-use WPNTS\Inc\WPNTS_SlackAttachment;
-use WPNTS\Inc\WPNTS_Route;
-use WPNTS\Inc\WPNTS_Notify;
-use WPNTS\Inc\WPNTS_Enqueue;
-use WPNTS\Inc\WPNTS_WPUpdate;
-use WPNTS\Inc\WPNTS_Activate;
-use WPNTS\Inc\WPNTS_DbTables;
-use WPNTS\Inc\WPNTS_Deactivate;
-use WPNTS\Inc\WPNTS_WooCommerce;
-use WPNTS\Inc\WPNTS_PluginUpdate;
-use WPNTS\Inc\WPNTS_AdminDashboard;
-use WPNTS\Inc\WPNTS_BaseController;
-use WPNTS\Inc\WPNTS_NotifierReview;
-use WPNTS\Inc\WPNTS_NotifierSupport;
-use WPNTS\Inc\WPNTS_Security;
+use WPNTS\Inc\Ajax\Ajax;
+use WPNTS\Inc\Route;
+use WPNTS\Inc\Notify;
+use WPNTS\Inc\Enqueue;
+use WPNTS\Inc\WPUpdate;
+use WPNTS\Inc\Activate;
+use WPNTS\Inc\Security;
+use WPNTS\Inc\DbTables;
+use WPNTS\Inc\Deactivate;
+use WPNTS\Inc\Database\DB;
+use WPNTS\Inc\WooCommerce;
+use WPNTS\Inc\PluginUpdate;
+use WPNTS\Inc\AdminDashboard;
+use WPNTS\Inc\BaseController;
+use WPNTS\Inc\NotifierReview;
+use WPNTS\Inc\NotifierSupport;
+use WPNTS\Inc\SlackAttachment;
 
 
-if ( ! class_exists('WPNTS_Notifier') ) {
+if ( ! class_exists('Notifier') ) {
 	/**
 	 * Main plugin class.
 	 *
 	 * @since 1.0.0
 	 */
-	class WPNTS_Notifier {
+	class Notifier {
 		/**
 		 * Holds the plugin base file
 		 *
@@ -99,37 +101,38 @@ if ( ! class_exists('WPNTS_Notifier') ) {
 		 * Classes instantiating here.
 		 */
 		public function includes() {
-			new WPNTS_AdminDashboard();
-			$enqueue = new WPNTS_Enqueue();
+			new AdminDashboard();
+			$enqueue = new Enqueue();
 			$enqueue->register();
-			new WPNTS_BaseController();
-			new WPNTS_DbTables();
-			new WPNTS_Route();
+			
+			new BaseController();
+			new DbTables();
+			new Route();
+			
+			//Calling Ajax.
+			new Ajax(); 
 
 			// Active and Deactivation notification.
-			$active  = new WPNTS_Notify();
+			$active  = new Notify();
 
 			// All plugin update notification.
-			$update = new WPNTS_PluginUpdate();
+			$update = new PluginUpdate();
 			$update->wpnts_plugin_update_notification();
 
 			// WordPress Core version update notification.
-			$wpupdate = new WPNTS_WPUpdate();
+			$wpupdate = new WPUpdate();
 			$wpupdate->wpnts_wordpress_core_update();
 
 			// Plugin ORG support case notification.
-			$load_support = new WPNTS_NotifierSupport();
+			$load_support = new NotifierSupport();
 			$load_support->wpnts_support_tickets();
 
 			// Plugin review notification.
-			$load_review = new WPNTS_NotifierReview();
+			$load_review = new NotifierReview();
 			$load_review->wpnts_review_tickets();
-
-			$woocoomerce_product = new WPNTS_WooCommerce();
-
-			$security_acess = new WPNTS_Security();
-
-			$slackattachment = new WPNTS_SlackAttachment();
+			$woocoomerce_product = new WooCommerce();
+			$security_acess = new Security();
+			$slackattachment = new SlackAttachment();
 		}
 		/**
 		 * While active the plugin redirect.
@@ -147,19 +150,19 @@ if ( ! class_exists('WPNTS_Notifier') ) {
 		 * Activation Hook
 		 */
 		public function wpnts_activate() {
-			WPNTS_Activate::wpnts_activate();
+			Activate::wpnts_activate();
 		}
 		/**
 		 * Deactivation Hook
 		 */
 		public function wpnts_deactivate() {
-			WPNTS_Deactivate::wpnts_deactivate();
+			Deactivate::wpnts_deactivate();
 		}
 	}
 	/**
 	 * Instantiate an Object Class
 	 */
-	$wpnts = new WPNTS_Notifier();
+	$wpnts = new Notifier();
 	$wpnts->register();
 
 

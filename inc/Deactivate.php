@@ -9,21 +9,21 @@
 
 namespace WPNTS\Inc;
 
-use \WPNTS\Inc\WPNTS_Notify;
-use \WPNTS\Inc\WPNTS_WPUpdate;
-use \WPNTS\Inc\WPNTS_PluginUpdate;
-use \WPNTS\Inc\WPNTS_NotifierReview;
-use \WPNTS\Inc\WPNTS_NotifierSupport;
+use \WPNTS\Inc\Notify;
+use \WPNTS\Inc\WPUpdate;
+use \WPNTS\Inc\PluginUpdate;
+use \WPNTS\Inc\NotifierReview;
+use \WPNTS\Inc\NotifierSupport;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
- * WPNTS_Deactivate Class fire on deactivation of the plugin.
+ * Deactivate Class fire on deactivation of the plugin.
  *
  * @since 1.0.0
  */
-class WPNTS_Deactivate {
+class Deactivate {
 	/**
-	 * WPNTS_deactivate Instance.
+	 * deactivate Instance.
 	 *
 	 * @since  1.0.0
 	 */

@@ -9,9 +9,9 @@
 
 namespace WPNTS\Inc;
 
-use \WPNTS\Inc\WPNTS_Activate;
-use \WPNTS\Inc\WPNTS_Deactivate;
-use \WPNTS\Inc\WPNTS_SlackAttachment;
+use \WPNTS\Inc\Activate;
+use \WPNTS\Inc\Deactivate;
+use \WPNTS\Inc\SlackAttachment;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
@@ -19,7 +19,7 @@ defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
  *
  * @since 1.0.0
  */
-class WPNTS_NotifierReview {
+class NotifierReview {
 
 	/**
 	 * $unresolved_tickets Holds the path of the root directory.
@@ -35,8 +35,16 @@ class WPNTS_NotifierReview {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+
 		add_filter( 'cron_schedules', [ $this, 'wpnts_add_cron_interval' ]);
-		add_action( 'wpnts_corn_hook', [ $this, 'wpnts_review_tickets' ]);
+
+		$schedules_int = get_option( 'wpnts_default_interval');
+		$schedules_interval = json_decode($schedules_int);
+		$wpnts_activereview = $schedules_interval->activereview ?? 'false';
+
+		if ( true === $wpnts_activereview ) {
+			add_action( 'wpnts_corn_hook', [ $this, 'wpnts_review_tickets' ]);
+		}
 	}
 	/**
 	 * Corn setup time interval.
@@ -45,7 +53,7 @@ class WPNTS_NotifierReview {
 	 */
 	public function wpnts_add_cron_interval() {
 
-		$schedules_int = get_option( 'wpnts_schedules_interval');
+		$schedules_int = get_option( 'wpnts_default_interval');
 		$schedules_interval = json_decode($schedules_int);
 		$wpnts_time = $schedules_interval->interval_review ?? '250';
 
@@ -82,7 +90,7 @@ class WPNTS_NotifierReview {
 		$last_sent_time = get_option('wpnts_review_last_sent_time', 3);
 		$current_time = time();
 
-		$schedules_int = get_option( 'wpnts_schedules_interval');
+		$schedules_int = get_option( 'wpnts_default_interval');
 		$schedules_interval = json_decode($schedules_int);
 		$wpnts_time = $schedules_interval->interval_review ?? '250';
 		$activereview = $schedules_interval->activereview ?? 'false';
@@ -104,7 +112,7 @@ class WPNTS_NotifierReview {
 					$xml = simplexml_load_string($body);
 					$recent_reviews = [];
 
-					$schedules_int = get_option( 'wpnts_schedules_interval');
+					$schedules_int = get_option( 'wpnts_default_interval');
 					$schedules_interval = json_decode($schedules_int);
 					$wpnts_review_days = $schedules_interval->reviewDays;
 
@@ -137,13 +145,13 @@ class WPNTS_NotifierReview {
 
 				// Send to slack.
 
-				$schedules_int = get_option( 'wpnts_schedules_interval');
+				$schedules_int = get_option( 'wpnts_default_interval');
 				$schedules_interval = json_decode($schedules_int);
 				$wpnts_webhook = $schedules_interval->webhook;
 
 				$webhook_url = $wpnts_webhook;
 
-				$attachmentHandler = new WPNTS_SlackAttachment();
+				$attachmentHandler = new SlackAttachment();
 				foreach ( $recent_reviews as $ticket ) {
 					$ticket_title = substr($ticket['title'], strpos($ticket['title'], ']'));
 					$ticket_link = $ticket['link'];
@@ -159,7 +167,8 @@ class WPNTS_NotifierReview {
 				$message = $attachmentHandler->getMessage();
 
 				wp_remote_post($webhook_url, [
-					'body' => json_encode($message),
+					// 'body' => json_encode($message),
+					'body' => is_array($message) ? json_encode($message) : $message,
 					'headers' => [
 						'Content-Type' => 'application/json',
 					],

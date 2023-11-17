@@ -9,11 +9,11 @@
 
 namespace WPNTS\Inc;
 
-use \WPNTS\Inc\WPNTS_Notify;
-use \WPNTS\Inc\WPNTS_WPUpdate;
-use \WPNTS\Inc\WPNTS_PluginUpdate;
-use \WPNTS\Inc\WPNTS_NotifierReview;
-use \WPNTS\Inc\WPNTS_NotifierSupport;
+use \WPNTS\Inc\Notify;
+use \WPNTS\Inc\WPUpdate;
+use \WPNTS\Inc\PluginUpdate;
+use \WPNTS\Inc\NotifierReview;
+use \WPNTS\Inc\NotifierSupport;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
@@ -21,7 +21,7 @@ defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
  *
  * @since 1.0.0
  */
-class WPNTS_Activate {
+class Activate {
 
 	/**
 	 * Activate function, Seed initial settings.

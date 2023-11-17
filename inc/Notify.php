@@ -9,16 +9,16 @@
 
 namespace WPNTS\Inc;
 
-use \WPNTS\Inc\WPNTS_Activate;
-use \WPNTS\Inc\WPNTS_Deactivate;
+use \WPNTS\Inc\Activate;
+use \WPNTS\Inc\Deactivate;
 
 defined('ABSPATH') || die('Hey, what are you doing here? You silly human!');
 /**
- * WPNTS_Notify used to rest route created
+ * Notify used to rest route created
  *
  * @since 1.0.0
  */
-class WPNTS_Notify {
+class Notify {
 
 	/**
 	 * Construct method.
